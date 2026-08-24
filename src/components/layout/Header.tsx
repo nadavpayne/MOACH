@@ -51,7 +51,7 @@ export function Header() {
 
         <a
           href="#demo"
-          className="ms-auto hidden rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-accent-secondary md:inline-flex"
+          className="ms-auto hidden bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-accent-secondary md:inline-flex"
         >
           קבעו דמו
         </a>
@@ -83,7 +83,7 @@ export function Header() {
             <a
               href="#demo"
               onClick={() => setMenuOpen(false)}
-              className="mt-2 inline-flex justify-center rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-background"
+              className="mt-2 inline-flex justify-center bg-accent px-5 py-2.5 text-sm font-semibold text-background"
             >
               קבעו דמו
             </a>

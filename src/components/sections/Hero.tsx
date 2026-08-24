@@ -58,7 +58,7 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         <div className="mt-10">
           <a
             href="#demo"
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-background transition-colors hover:bg-accent-secondary"
+            className="inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-base font-semibold text-background transition-colors hover:bg-accent-secondary"
           >
             ראו את המוח בפעולה
             <span aria-hidden>←</span>

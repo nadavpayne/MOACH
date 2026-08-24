@@ -41,7 +41,7 @@ function ListItem({
   const borderColor = useTransform(
     progress,
     [segStart, segStart + 0.02, segEnd - 0.02, segEnd],
-    ["#232527", "#d98a4c", "#d98a4c", "#232527"]
+    ["#232527", "#3d7fe0", "#3d7fe0", "#232527"]
   );
 
   return (
