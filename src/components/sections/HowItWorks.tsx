@@ -36,86 +36,86 @@ function ListItem({
   const opacity = useTransform(
     progress,
     [Math.max(0, segStart - 0.08), segStart, segEnd, Math.min(1, segEnd + 0.08)],
-    [0.7, 1, 1, 0.7]
+    [0.6, 1, 1, 0.6]
   );
   const borderColor = useTransform(
     progress,
     [segStart, segStart + 0.02, segEnd - 0.02, segEnd],
-    ["#232527", "#3d7fe0", "#3d7fe0", "#232527"]
+    ["#e2e2e2", "#3d7fe0", "#3d7fe0", "#e2e2e2"]
   );
 
   return (
     <motion.div className="relative border-t py-6 first:border-t-0" style={{ borderColor }}>
       <motion.div style={{ opacity }}>
-        <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-foreground">{item.desc}</p>
+        <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">{item.desc}</p>
       </motion.div>
     </motion.div>
   );
 }
 
-const LAYERS = [
-  { size: 110, rotateTo: -6, border: "border-foreground/25", bg: "bg-transparent" },
-  { size: 210, rotateTo: 10, border: "border-accent/40", bg: "bg-accent/5" },
-  { size: 310, rotateTo: -14, border: "border-accent/60", bg: "bg-accent/10" },
-  { size: 410, rotateTo: 18, border: "border-accent", bg: "bg-accent/15" },
-];
-
-function GrowingLayer({
-  layer,
-  index,
-  progress,
-}: {
-  layer: (typeof LAYERS)[number];
-  index: number;
-  progress: MotionValue<number>;
-}) {
-  const trigger = index / LAYERS.length;
-  const scale = useTransform(progress, [Math.max(0, trigger - 0.03), trigger + 0.04], [0, 1]);
-  const rotate = useTransform(progress, [0, 1], [0, layer.rotateTo]);
+function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
+  const scale = useTransform(progress, [0, 1], [0.18, 1]);
+  const glowScale = useTransform(progress, [0, 1], [0.3, 1.3]);
+  const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
 
   return (
-    <motion.div
-      style={{ scale, rotate, width: layer.size, height: layer.size }}
-      className={`absolute rounded-[28px] border ${layer.border} ${layer.bg}`}
-    />
+    <div className="relative flex h-full w-full items-center justify-center">
+      <motion.div
+        aria-hidden
+        style={{ scale: glowScale, opacity: glowOpacity }}
+        className="absolute h-64 w-64 rounded-full bg-accent blur-[90px]"
+      />
+      <motion.div
+        style={{
+          scale,
+          backgroundColor: "var(--accent)",
+          WebkitMaskImage: "url(/logo/moach-mark.png)",
+          maskImage: "url(/logo/moach-mark.png)",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+        className="relative h-[320px] w-[320px]"
+      />
+    </div>
   );
 }
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border border-border md:flex">
+    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 md:flex">
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.15]"
+        className="absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundImage:
-            "radial-gradient(circle, var(--foreground-secondary) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #cbd5e1 1px, transparent 1px)",
           backgroundSize: "18px 18px",
         }}
       />
-      {LAYERS.map((layer, i) => (
-        <GrowingLayer key={layer.size} layer={layer} index={i} progress={progress} />
-      ))}
+      <GrowingBrain progress={progress} />
     </div>
   );
 }
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="flex h-full flex-col justify-center bg-background px-6 md:px-16">
+    <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="rounded-2xl border border-border bg-background-secondary/40 p-8 md:p-12">
-          <div className="flex flex-col gap-6 border-b border-border pb-8 md:flex-row md:items-end md:justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-8 md:p-12">
+          <div className="flex flex-col gap-6 border-b border-slate-200 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-xs font-semibold tracking-widest text-accent uppercase">
                 איך זה עובד
               </p>
-              <h2 className="mt-3 max-w-lg text-3xl font-extrabold leading-tight text-foreground md:text-4xl">
+              <h2 className="mt-3 max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
                 לומדים את התפעול שלך, ואז מריצים אותו.
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-relaxed text-foreground">
+            <p className="max-w-sm text-sm leading-relaxed text-slate-600">
               מוח מתחבר למערכות שלך ובונה מודל מותאם לכל סניף. מזג אוויר, אירועים והיסטוריית
               מכירות מניעים הזמנות, הכנה, שיבוץ ושרשרת אספקה מתוך המודל הזה, עם ההיגיון מאחורי כל
               מספר.
