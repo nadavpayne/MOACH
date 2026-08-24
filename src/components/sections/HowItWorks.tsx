@@ -36,7 +36,7 @@ function ListItem({
   const opacity = useTransform(
     progress,
     [Math.max(0, segStart - 0.08), segStart, segEnd, Math.min(1, segEnd + 0.08)],
-    [0.4, 1, 1, 0.4]
+    [0.7, 1, 1, 0.7]
   );
   const borderColor = useTransform(
     progress,
@@ -48,20 +48,43 @@ function ListItem({
     <motion.div className="relative border-t py-6 first:border-t-0" style={{ borderColor }}>
       <motion.div style={{ opacity }}>
         <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-foreground-secondary">
-          {item.desc}
-        </p>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-foreground">{item.desc}</p>
       </motion.div>
     </motion.div>
   );
 }
 
-function VisualPanel({ progress }: { progress: MotionValue<number> }) {
-  const rotate = useTransform(progress, [0, 1], [0, 30]);
-  const scale = useTransform(progress, [0, 0.5, 1], [0.85, 1, 0.85]);
+const LAYERS = [
+  { size: 110, rotateTo: -6, border: "border-foreground/25", bg: "bg-transparent" },
+  { size: 210, rotateTo: 10, border: "border-accent/40", bg: "bg-accent/5" },
+  { size: 310, rotateTo: -14, border: "border-accent/60", bg: "bg-accent/10" },
+  { size: 410, rotateTo: 18, border: "border-accent", bg: "bg-accent/15" },
+];
+
+function GrowingLayer({
+  layer,
+  index,
+  progress,
+}: {
+  layer: (typeof LAYERS)[number];
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const trigger = index / LAYERS.length;
+  const scale = useTransform(progress, [Math.max(0, trigger - 0.03), trigger + 0.04], [0, 1]);
+  const rotate = useTransform(progress, [0, 1], [0, layer.rotateTo]);
 
   return (
-    <div className="relative hidden items-center justify-center overflow-hidden rounded-xl border border-border md:flex">
+    <motion.div
+      style={{ scale, rotate, width: layer.size, height: layer.size }}
+      className={`absolute rounded-[28px] border ${layer.border} ${layer.bg}`}
+    />
+  );
+}
+
+function VisualPanel({ progress }: { progress: MotionValue<number> }) {
+  return (
+    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border border-border md:flex">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.15]"
@@ -71,14 +94,9 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
           backgroundSize: "18px 18px",
         }}
       />
-      <motion.div
-        style={{ rotate, scale }}
-        className="relative h-40 w-40 rounded-3xl border border-accent/40 bg-accent/5"
-      />
-      <motion.div
-        style={{ scale }}
-        className="absolute h-24 w-24 rounded-2xl border border-accent/60 bg-accent/10"
-      />
+      {LAYERS.map((layer, i) => (
+        <GrowingLayer key={layer.size} layer={layer} index={i} progress={progress} />
+      ))}
     </div>
   );
 }
@@ -97,7 +115,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
                 לומדים את התפעול שלך, ואז מריצים אותו.
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-relaxed text-foreground-secondary">
+            <p className="max-w-sm text-sm leading-relaxed text-foreground">
               מוח מתחבר למערכות שלך ובונה מודל מותאם לכל סניף. מזג אוויר, אירועים והיסטוריית
               מכירות מניעים הזמנות, הכנה, שיבוץ ושרשרת אספקה מתוך המודל הזה, עם ההיגיון מאחורי כל
               מספר.
