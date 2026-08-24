@@ -32,7 +32,9 @@ export function Header() {
             height={26}
             className="invert"
           />
-          <span className="text-xl font-extrabold tracking-tight text-foreground">מוח</span>
+          <span dir="ltr" className="text-xl font-extrabold tracking-tight text-foreground">
+            MOACH
+          </span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
