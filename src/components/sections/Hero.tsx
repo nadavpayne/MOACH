@@ -9,9 +9,9 @@ export function Hero() {
         fill
         priority
         sizes="100vw"
-        className="object-cover object-[70%_35%] opacity-70 grayscale blur-sm contrast-125 brightness-[0.55] md:blur-md"
+        className="object-cover object-[70%_35%] opacity-90 grayscale blur-sm contrast-110 brightness-[0.85] md:blur-md"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/35 to-background" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.12]"
@@ -41,14 +41,14 @@ export function Hero() {
             href="#demo"
             className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-background transition-colors hover:bg-accent-secondary"
           >
-            קבעו דמו
+            ראו את המוח בפעולה
             <span aria-hidden>←</span>
           </a>
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto mt-20 flex w-full max-w-6xl items-center justify-start gap-4">
-        <div className="h-px w-24 bg-border" />
+      <div className="relative z-10 mx-auto mt-20 flex w-full max-w-6xl items-center justify-end gap-4">
+        <div className="h-0.5 w-24 bg-foreground-secondary/60" />
         <p className="text-sm text-foreground-secondary">נתונים חיים, כל משמרת</p>
       </div>
     </section>
