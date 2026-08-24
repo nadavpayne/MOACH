@@ -8,7 +8,7 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const contentOpacity = useTransform(progress, [0, 0.6, 1], [1, 1, 0]);
   const contentY = useTransform(progress, [0, 1], [0, -60]);
   const imageScale = useTransform(progress, [0, 1], [1, 1.12]);
-  const imageBrightness = useTransform(progress, [0, 1], [0.85, 0.4]);
+  const imageBrightness = useTransform(progress, [0, 1], [0.45, 0.15]);
 
   return (
     <section className="relative flex h-full flex-col justify-center overflow-hidden bg-background px-6 pb-16 md:px-16">
@@ -27,7 +27,7 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         style={{ opacity: imageBrightness }}
         className="absolute inset-0 bg-background"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/35 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/15 via-background/10 to-background/40" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.12]"
