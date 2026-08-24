@@ -33,11 +33,6 @@ function ListItem({
 }) {
   const segStart = index / ITEMS.length;
   const segEnd = (index + 1) / ITEMS.length;
-  const opacity = useTransform(
-    progress,
-    [Math.max(0, segStart - 0.08), segStart, segEnd, Math.min(1, segEnd + 0.08)],
-    [0.6, 1, 1, 0.6]
-  );
   const borderColor = useTransform(
     progress,
     [segStart, segStart + 0.02, segEnd - 0.02, segEnd],
@@ -45,11 +40,12 @@ function ListItem({
   );
 
   return (
-    <motion.div className="relative border-t py-6 first:border-t-0" style={{ borderColor }}>
-      <motion.div style={{ opacity }}>
-        <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">{item.desc}</p>
-      </motion.div>
+    <motion.div
+      className="relative border-t-4 py-6 first:border-t-0"
+      style={{ borderColor }}
+    >
+      <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
+      <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">{item.desc}</p>
     </motion.div>
   );
 }
