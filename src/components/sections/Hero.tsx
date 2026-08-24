@@ -1,9 +1,20 @@
+import Image from "next/image";
+
 export function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-background px-6 pt-24 pb-16 md:px-16">
+      <Image
+        src="/images/hero-kitchen.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-[70%_35%] opacity-70 grayscale blur-sm contrast-125 brightness-[0.55] md:blur-md"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.15]"
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
             "radial-gradient(circle, var(--foreground-secondary) 1px, transparent 1px)",
