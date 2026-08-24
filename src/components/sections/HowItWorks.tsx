@@ -33,10 +33,13 @@ function ListItem({
 }) {
   const segStart = index / ITEMS.length;
   const segEnd = (index + 1) / ITEMS.length;
+  const isLast = index === ITEMS.length - 1;
   const borderColor = useTransform(
     progress,
-    [segStart, segStart + 0.02, segEnd - 0.02, segEnd],
-    ["#e2e2e2", "#3d7fe0", "#3d7fe0", "#e2e2e2"]
+    isLast
+      ? [segStart, segStart + 0.02]
+      : [segStart, segStart + 0.02, segEnd - 0.02, segEnd],
+    isLast ? ["#b6bec7", "#3d7fe0"] : ["#b6bec7", "#3d7fe0", "#3d7fe0", "#b6bec7"]
   );
 
   return (
@@ -51,7 +54,7 @@ function ListItem({
 }
 
 function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 1], [0.18, 1]);
+  const scale = useTransform(progress, [0, 1], [0.15, 1.15]);
   const glowScale = useTransform(progress, [0, 1], [0.3, 1.3]);
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
 
@@ -83,12 +86,12 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 md:flex">
+    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border-2 border-slate-300 bg-slate-50 md:flex">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundImage: "radial-gradient(circle, #cbd5e1 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #b6bec7 1px, transparent 1px)",
           backgroundSize: "18px 18px",
         }}
       />
@@ -101,8 +104,8 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
     <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-8 md:p-12">
-          <div className="flex flex-col gap-6 border-b border-slate-200 pb-8 md:flex-row md:items-end md:justify-between">
+        <div className="rounded-2xl border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+          <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-xs font-semibold tracking-widest text-accent uppercase">
                 איך זה עובד
@@ -135,7 +138,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
 export function HowItWorks() {
   return (
     <section id="how-it-works">
-      <ScrollStage heightVh={280}>
+      <ScrollStage heightVh={320}>
         {(progress) => <HowItWorksContent progress={progress} />}
       </ScrollStage>
     </section>
