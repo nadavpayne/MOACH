@@ -50,7 +50,7 @@ function useHeaderBlur() {
       if (isContentMoving()) {
         setBlur(true);
         clearTimeout(timeout);
-        timeout = setTimeout(() => setBlur(false), 200);
+        timeout = setTimeout(() => setBlur(false), 350);
       } else {
         clearTimeout(timeout);
         setBlur(false);
