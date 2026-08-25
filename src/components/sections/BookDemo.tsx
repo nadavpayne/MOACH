@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useMotionValueEvent, useTransform, type MotionValue } from "framer-motion";
+import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 
 const STEPS = [
@@ -45,30 +45,32 @@ function StepRow({
   isLast: boolean;
 }) {
   return (
-    <div className="relative flex gap-5 pb-10 last:pb-0 [@media(max-height:960px)]:pb-2">
+    <div className="relative flex gap-5 pb-10 last:pb-0 [@media(max-height:960px)]:pb-1">
       {!isLast && (
         <div
-          className={`absolute right-5 top-10 bottom-0 w-px transition-colors duration-500 ${
+          className={`absolute right-5 top-10 bottom-0 w-px transition-colors duration-500 [@media(max-height:960px)]:top-8 ${
             active ? "bg-accent/40" : "bg-white/10"
           }`}
         />
       )}
       <div
-        className={`flex h-10 w-10 shrink-0 items-center justify-center border text-sm font-bold transition-all duration-500 ${
-          active ? "border-accent bg-accent text-background" : "border-white/15 text-foreground-secondary"
+        className={`flex h-10 w-10 shrink-0 items-center justify-center border text-sm font-bold transition-all duration-500 [@media(max-height:960px)]:h-8 [@media(max-height:960px)]:w-8 [@media(max-height:960px)]:text-xs ${
+          active ? "border-accent bg-accent text-foreground" : "border-white/15 text-foreground-secondary"
         }`}
       >
         {index + 1}
       </div>
       <div className={`transition-opacity duration-500 ${active ? "opacity-100" : "opacity-35"}`}>
-        <h3 className="text-lg font-extrabold text-foreground md:text-xl">{step.title}</h3>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-secondary">
+        <h3 className="text-lg font-extrabold text-foreground md:text-xl [@media(max-height:960px)]:text-base">
+          {step.title}
+        </h3>
+        <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-secondary [@media(max-height:960px)]:mt-0.5 [@media(max-height:960px)]:text-xs">
           {step.desc}
         </p>
         {step.cta && (
           <a
             href="#demo"
-            className="mt-5 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-accent-secondary"
+            className="mt-5 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent-secondary [@media(max-height:960px)]:mt-2 [@media(max-height:960px)]:py-1.5"
           >
             קבעו דמו
             <span aria-hidden>←</span>
@@ -79,22 +81,22 @@ function StepRow({
   );
 }
 
-function DottedBrain({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 1], [0.4, 1.3]);
-  const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.1, 0.3, 0.2]);
-
+function DottedBrain() {
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <motion.div
         aria-hidden
-        style={{ opacity: glowOpacity }}
+        animate={{ opacity: [0.15, 0.32, 0.15] }}
+        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
         className="absolute h-64 w-64 rounded-full bg-accent blur-[100px]"
       />
       <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
         style={{
-          scale,
-          backgroundImage: "radial-gradient(var(--accent) 1.4px, transparent 1.4px)",
-          backgroundSize: "7px 7px",
+          scale: 2.1,
+          backgroundImage: "radial-gradient(var(--accent) 0.9px, transparent 0.9px)",
+          backgroundSize: "4px 4px",
           WebkitMaskImage: "url(/logo/moach-mark.png)",
           maskImage: "url(/logo/moach-mark.png)",
           WebkitMaskSize: "contain",
@@ -104,7 +106,7 @@ function DottedBrain({ progress }: { progress: MotionValue<number> }) {
           WebkitMaskPosition: "center",
           maskPosition: "center",
         }}
-        className="relative h-[70%] w-[70%] max-h-[320px] max-w-[320px]"
+        className="relative h-[55%] w-[55%] max-h-[340px] max-w-[340px] [@media(max-height:960px)]:max-h-[190px] [@media(max-height:960px)]:max-w-[190px]"
       />
     </div>
   );
@@ -139,7 +141,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
               ))}
             </div>
             <div className="hidden h-[360px] flex-1 md:block [@media(max-height:960px)]:h-[220px]">
-              <DottedBrain progress={progress} />
+              <DottedBrain />
             </div>
           </div>
         </div>
