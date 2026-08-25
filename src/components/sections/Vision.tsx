@@ -1,17 +1,21 @@
 "use client";
 
-import { motion, useTransform, type MotionValue } from "framer-motion";
+import { useState } from "react";
+import { motion, useMotionValueEvent, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 
+const VIEWBOX_WIDTH = 340;
+const VIEWBOX_HEIGHT = 280;
+
 const NODES = [
-  { x: 27, y: 24, label: "תל אביב" },
-  { x: 183, y: 30, label: "חיפה" },
-  { x: 18, y: 132, label: "ירושלים" },
-  { x: 192, y: 126, label: "באר שבע" },
-  { x: 105, y: 153, label: "הסניף הבא" },
+  { x: 53, y: 39, label: "תל אביב" },
+  { x: 287, y: 48, label: "חיפה" },
+  { x: 40, y: 201, label: "ירושלים" },
+  { x: 300, y: 192, label: "באר שבע" },
+  { x: 170, y: 233, label: "הסניף הבא" },
 ];
 
-const HUB = { x: 105, y: 78 };
+const HUB = { x: 170, y: 120 };
 
 function NetworkLine({
   node,
@@ -36,7 +40,7 @@ function NetworkLine({
       strokeDasharray={1}
       style={{ strokeDashoffset: dashoffset }}
       stroke="var(--accent)"
-      strokeWidth={0.68}
+      strokeWidth={1.1}
       strokeLinecap="round"
     />
   );
@@ -53,7 +57,7 @@ function NetworkNode({
 }) {
   const segStart = index / NODES.length;
   const segEnd = segStart + 1 / NODES.length;
-  const radius = useTransform(progress, [segStart, segEnd - 0.05, segEnd], [1.0, 4.4, 3.6]);
+  const radius = useTransform(progress, [segStart, segEnd - 0.05, segEnd], [1.6, 7.2, 5.9]);
   const opacity = useTransform(progress, [segStart, segStart + 0.02], [0, 1]);
 
   return <motion.circle cx={node.x} cy={node.y} r={radius} fill="var(--accent)" style={{ opacity }} />;
@@ -61,53 +65,69 @@ function NetworkNode({
 
 function NodeLabel({
   node,
-  index,
-  progress,
+  revealed,
 }: {
   node: (typeof NODES)[number];
-  index: number;
-  progress: MotionValue<number>;
+  revealed: boolean;
 }) {
-  const segEnd = (index + 1) / NODES.length;
-  const opacity = useTransform(progress, [segEnd - 0.1, segEnd], [0, 1]);
-
   return (
-    <motion.text
-      x={node.x}
-      y={node.y + 14}
-      textAnchor="middle"
-      style={{ opacity, fontSize: "15px", fontWeight: 600 }}
-      className="fill-foreground/70"
+    <div
+      style={{
+        left: `${(node.x / VIEWBOX_WIDTH) * 100}%`,
+        top: `${(node.y / VIEWBOX_HEIGHT) * 100}%`,
+      }}
+      className={`pointer-events-none absolute -translate-x-1/2 translate-y-3 text-sm font-semibold whitespace-nowrap text-foreground/80 transition-opacity duration-300 md:text-base ${
+        revealed ? "opacity-100" : "opacity-0"
+      }`}
     >
       {node.label}
-    </motion.text>
+    </div>
   );
+}
+
+function useRevealedCount(progress: MotionValue<number>, total: number) {
+  const [count, setCount] = useState(0);
+  useMotionValueEvent(progress, "change", (v) => {
+    const next = Math.min(total, Math.max(0, Math.floor(total * (v + 0.1))));
+    setCount((prev) => (prev === next ? prev : next));
+  });
+  return count;
 }
 
 function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
   const hubGlowScale = useTransform(progress, [0, 1], [0.6, 1.5]);
   const hubGlowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.4, 0.3]);
   const hubRadius = useTransform(progress, [0, 1], [7, 11]);
+  const revealedCount = useRevealedCount(progress, NODES.length);
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative flex h-full w-full items-center justify-center">
       <motion.div
         aria-hidden
         style={{ scale: hubGlowScale, opacity: hubGlowOpacity }}
         className="absolute top-1/2 left-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent blur-[70px]"
       />
-      <svg viewBox="0 0 210 170" className="relative h-full w-full" preserveAspectRatio="xMidYMid meet">
+      <div
+        className="relative max-h-full max-w-full"
+        style={{ aspectRatio: `${VIEWBOX_WIDTH} / ${VIEWBOX_HEIGHT}`, height: "100%" }}
+      >
+        <svg
+          viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
+          className="absolute inset-0 h-full w-full"
+          preserveAspectRatio="none"
+        >
+          {NODES.map((node, i) => (
+            <NetworkLine key={node.label} node={node} index={i} progress={progress} />
+          ))}
+          {NODES.map((node, i) => (
+            <NetworkNode key={node.label} node={node} index={i} progress={progress} />
+          ))}
+          <motion.circle cx={HUB.x} cy={HUB.y} r={hubRadius} fill="var(--accent)" />
+        </svg>
         {NODES.map((node, i) => (
-          <NetworkLine key={node.label} node={node} index={i} progress={progress} />
+          <NodeLabel key={node.label} node={node} revealed={i < revealedCount} />
         ))}
-        {NODES.map((node, i) => (
-          <NetworkNode key={node.label} node={node} index={i} progress={progress} />
-        ))}
-        {NODES.map((node, i) => (
-          <NodeLabel key={node.label} node={node} index={i} progress={progress} />
-        ))}
-        <motion.circle cx={HUB.x} cy={HUB.y} r={hubRadius} fill="var(--accent)" />
-      </svg>
+      </div>
     </div>
   );
 }
