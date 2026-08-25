@@ -2,6 +2,7 @@
 
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { SectionHeaderLine } from "@/components/ui/SectionHeaderLine";
 
 const ITEMS = [
   {
@@ -102,7 +103,8 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
+    <div className="relative flex h-full flex-col justify-center bg-white px-6 md:px-16">
+      <SectionHeaderLine light />
       <div className="mx-auto w-full max-w-6xl">
         <div className="border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">

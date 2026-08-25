@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { SectionHeaderLine } from "@/components/ui/SectionHeaderLine";
 
 const STEPS = [
   {
@@ -171,7 +172,8 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
+    <div className="relative flex h-full flex-col justify-center bg-white px-6 md:px-16">
+      <SectionHeaderLine light />
       <div className="mx-auto w-full max-w-6xl">
         <div className="relative overflow-hidden border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
