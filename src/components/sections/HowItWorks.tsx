@@ -44,7 +44,7 @@ function ListItem({
 
   return (
     <motion.div
-      className="relative border-t-4 py-6 first:border-t-0 [@media(max-height:820px)]:py-2"
+      className="relative border-b-4 py-6 last:border-b-0 [@media(max-height:820px)]:py-2"
       style={{ borderColor }}
     >
       <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
@@ -56,8 +56,8 @@ function ListItem({
 }
 
 function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 1], [0.15, 1.15]);
-  const glowScale = useTransform(progress, [0, 1], [0.3, 1.3]);
+  const scale = useTransform(progress, [0, 1], [0.15, 1.7]);
+  const glowScale = useTransform(progress, [0, 1], [0.3, 1.9]);
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
 
   return (
@@ -80,7 +80,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
           WebkitMaskPosition: "center",
           maskPosition: "center",
         }}
-        className="relative h-[55%] w-[55%] max-h-[280px] max-w-[280px] [@media(max-height:820px)]:max-h-[190px] [@media(max-height:820px)]:max-w-[190px]"
+        className="relative h-[55%] w-[55%] max-h-[340px] max-w-[340px] [@media(max-height:820px)]:max-h-[190px] [@media(max-height:820px)]:max-w-[190px]"
       />
     </div>
   );
