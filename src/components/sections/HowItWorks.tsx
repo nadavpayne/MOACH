@@ -86,7 +86,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex">
+    <div className="relative hidden min-h-[220px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.4]"
@@ -102,10 +102,10 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col justify-center border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
-          <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
+    <div className="relative flex h-full min-h-0 flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
+      <div className="mx-auto flex w-full min-h-0 max-w-6xl flex-1 flex-col">
+        <div className="flex min-h-0 flex-1 flex-col justify-center gap-6 overflow-y-auto border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+          <div className="flex shrink-0 flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
                 לומדים את התפעול שלך, ואז מריצים אותו.
@@ -118,7 +118,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-10 pt-2 md:grid-cols-2">
+          <div className="grid shrink-0 grid-cols-1 gap-10 md:grid-cols-2">
             <div>
               {ITEMS.map((item, i) => (
                 <ListItem key={item.title} item={item} index={i} progress={progress} />
