@@ -43,13 +43,11 @@ function StepText({ step, active }: { step: (typeof STEPS)[number]; active: bool
         active ? "opacity-100 translate-y-0" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >
-      <span className="text-7xl font-extrabold text-foreground/10 md:text-8xl">
+      <span className="text-7xl font-extrabold text-slate-900/10 md:text-8xl">
         {step.number}
       </span>
-      <h3 className="mt-4 text-2xl font-extrabold text-foreground md:text-3xl">{step.title}</h3>
-      <p className="mt-4 max-w-md text-base leading-relaxed text-foreground-secondary">
-        {step.desc}
-      </p>
+      <h3 className="mt-4 text-2xl font-extrabold text-slate-900 md:text-3xl">{step.title}</h3>
+      <p className="mt-4 max-w-md text-base leading-relaxed text-slate-600">{step.desc}</p>
     </div>
   );
 }
@@ -68,14 +66,14 @@ function DemandMockup() {
   const heights = [30, 45, 38, 62, 50, 90, 55];
   return (
     <div className="flex h-full flex-col justify-center p-8">
-      <p className="mb-6 text-xs font-semibold tracking-widest text-foreground-secondary uppercase">
+      <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 uppercase">
         תחזית שבועית
       </p>
       <div className="flex h-40 items-end gap-3">
         {heights.map((h, i) => (
           <div key={i} className="flex flex-1 flex-col items-center gap-2">
             <div
-              className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-foreground/15"}`}
+              className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-slate-300"}`}
               style={{ height: `${h}%` }}
             />
             {i === 5 && <span className="text-[10px] font-semibold text-accent">ערב חג</span>}
@@ -97,9 +95,9 @@ function OrdersMockup() {
       {rows.map((row) => (
         <div
           key={row.name}
-          className="flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.03] px-4 py-3"
+          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
-          <span className="text-sm font-medium text-foreground">{row.name}</span>
+          <span className="text-sm font-medium text-slate-900">{row.name}</span>
           <span className="text-xs text-accent">{row.status}</span>
         </div>
       ))}
@@ -119,9 +117,9 @@ function WorkforceMockup() {
       {shifts.map((shift) => (
         <div
           key={shift.name}
-          className="flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.03] px-4 py-3"
+          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
-          <span className="text-sm font-medium text-foreground">{shift.name}</span>
+          <span className="text-sm font-medium text-slate-900">{shift.name}</span>
           {shift.tag && (
             <span className="rounded bg-accent/15 px-2 py-1 text-xs font-semibold text-accent">
               {shift.tag}
@@ -144,10 +142,10 @@ function SupplyChainMockup() {
       {suppliers.map((s) => (
         <div
           key={s.name}
-          className="flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.03] px-4 py-3"
+          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
-          <span className="text-sm font-medium text-foreground">{s.name}</span>
-          <span className="text-xs text-foreground-secondary">{s.days}</span>
+          <span className="text-sm font-medium text-slate-900">{s.name}</span>
+          <span className="text-xs text-slate-500">{s.days}</span>
         </div>
       ))}
     </div>
@@ -173,9 +171,9 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="flex h-full flex-col justify-center bg-background px-6 md:px-16">
+    <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-background-secondary/40 p-8 md:p-12">
+        <div className="relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>
@@ -187,7 +185,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
               ))}
             </div>
 
-            <div className="relative hidden min-h-[360px] overflow-hidden rounded-xl border border-border md:block">
+            <div className="relative hidden min-h-[360px] overflow-hidden rounded-xl border-2 border-slate-300 bg-white md:block">
               {STEPS.map((_, i) => (
                 <StepMockup key={i} index={i} active={i === active} />
               ))}
