@@ -205,7 +205,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
 
 export function OperationalSide() {
   return (
-    <section id="operations">
+    <section id="operations" data-header-theme="light">
       <ScrollStage heightVh={340}>
         {(progress) => <OperationalSideContent progress={progress} />}
       </ScrollStage>

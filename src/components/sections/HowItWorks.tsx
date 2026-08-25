@@ -137,7 +137,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works">
+    <section id="how-it-works" data-header-theme="light">
       <ScrollStage heightVh={320}>
         {(progress) => <HowItWorksContent progress={progress} />}
       </ScrollStage>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 
 const NAV_LINKS = [
   { href: "#how-it-works", label: "איך זה עובד" },
@@ -10,19 +10,35 @@ const NAV_LINKS = [
   { href: "#vision", label: "חזון השירות" },
 ];
 
-export function Header() {
+function detectTheme(): "dark" | "light" {
+  const el = document.elementFromPoint(window.innerWidth / 2, 80);
+  const themed = el?.closest("[data-header-theme]");
+  return (themed?.getAttribute("data-header-theme") as "dark" | "light" | null) ?? "dark";
+}
+
+function useHeaderTheme() {
   const { scrollY } = useScroll();
-  const bgOpacity = useTransform(scrollY, [0, 120], [0, 1]);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    setTheme(detectTheme());
+  }, []);
+
+  useMotionValueEvent(scrollY, "change", () => {
+    const next = detectTheme();
+    setTheme((prev) => (prev === next ? prev : next));
+  });
+
+  return theme;
+}
+
+export function Header() {
+  const theme = useHeaderTheme();
+  const isLight = theme === "light";
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[72px]">
-      <motion.div
-        aria-hidden
-        style={{ opacity: bgOpacity }}
-        className="absolute inset-0 border-b border-border bg-background/90 backdrop-blur-md"
-      />
-
       <div className="relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16">
         <a href="#" className="flex shrink-0 items-center gap-2.5">
           <Image
@@ -30,9 +46,14 @@ export function Header() {
             alt="מוח"
             width={26}
             height={26}
-            className="invert"
+            className={`transition-all duration-300 ${isLight ? "" : "invert"}`}
           />
-          <span dir="ltr" className="text-xl font-extrabold tracking-tight text-foreground">
+          <span
+            dir="ltr"
+            className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${
+              isLight ? "text-slate-900" : "text-white"
+            }`}
+          >
             MOACH
           </span>
         </a>
@@ -42,7 +63,9 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-foreground-secondary transition-colors hover:text-foreground"
+              className={`text-sm font-medium transition-colors duration-300 ${
+                isLight ? "text-slate-600 hover:text-slate-900" : "text-white/70 hover:text-white"
+              }`}
             >
               {link.label}
             </a>
@@ -59,7 +82,9 @@ export function Header() {
         <button
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="תפריט"
-          className="ms-auto text-foreground md:hidden"
+          className={`ms-auto transition-colors duration-300 md:hidden ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />

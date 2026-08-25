@@ -11,7 +11,10 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const imageBrightness = useTransform(progress, [0, 1], [0.45, 0.15]);
 
   return (
-    <section className="relative flex h-full flex-col justify-center overflow-hidden bg-background px-6 pb-16 md:px-16">
+    <section
+      data-header-theme="dark"
+      className="relative flex h-full flex-col justify-center overflow-hidden bg-background px-6 pb-16 md:px-16"
+    >
       <motion.div style={{ scale: imageScale }} className="absolute inset-0">
         <Image
           src="/images/hero-kitchen.jpg"
