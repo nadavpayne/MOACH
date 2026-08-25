@@ -94,8 +94,9 @@ function DottedBrain() {
         className="absolute h-64 w-64 rounded-full bg-accent blur-[100px]"
       />
       <motion.div
-        animate={{ rotateY: 360 }}
-        transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+        initial={{ rotate: 0, rotateX: 0, rotateY: 0 }}
+        animate={{ rotate: 0, rotateX: 0, rotateY: 360 }}
+        transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
         style={{
           scale: 2.6,
           backgroundImage: "radial-gradient(var(--accent) 0.9px, transparent 0.9px)",
