@@ -5,8 +5,8 @@ import { useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 
 const CARDS = [
-  { title: "קופה ותשלומים", desc: "מסתנכרן עם הקופה שלך בזמן אמת, כולל Tabit." },
-  { title: "שרשרת אספקה", desc: "הזמנות יוצאות ישירות לספקים, כולל חיבור ל-Beecom." },
+  { title: "קופה ותשלומים", desc: "מסתנכרן עם הקופה שלך בזמן אמת, כולל Tabit ו-Beecom." },
+  { title: "שרשרת אספקה", desc: "הזמנות יוצאות ישירות לספקים לפי התחזית, אוטומטית." },
   { title: "משמרות ונוכחות", desc: "שיבוץ וכניסות-יציאות מתעדכנים אוטומטית." },
   { title: "משלוחים", desc: "מזהה עומסים מפלטפורמות המשלוחים לפני שהם קורים." },
   { title: "הנהלת חשבונות", desc: "דוחות ונתונים מוכנים לרואה החשבון, בלי הקלדה כפולה." },
