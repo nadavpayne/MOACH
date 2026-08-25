@@ -81,11 +81,14 @@ function StepRow({
   );
 }
 
+const BRAIN_LAYERS = 18;
+const BRAIN_LAYER_DEPTH = 3;
+
 function DottedBrain() {
   return (
     <div
       className="relative flex h-full w-full -translate-y-6 items-center justify-center [@media(max-height:960px)]:-translate-y-3"
-      style={{ perspective: "1000px" }}
+      style={{ perspective: "1200px" }}
     >
       <motion.div
         aria-hidden
@@ -96,23 +99,33 @@ function DottedBrain() {
       <motion.div
         initial={{ rotate: 0, rotateX: 0, rotateY: 0 }}
         animate={{ rotate: 0, rotateX: 0, rotateY: 360 }}
-        transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        style={{
-          scale: 2.6,
-          backgroundImage: "radial-gradient(var(--accent) 0.9px, transparent 0.9px)",
-          backgroundSize: "4px 4px",
-          WebkitMaskImage: "url(/logo/moach-mark.png)",
-          maskImage: "url(/logo/moach-mark.png)",
-          WebkitMaskSize: "contain",
-          maskSize: "contain",
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          maskPosition: "center",
-          transformStyle: "preserve-3d",
-        }}
+        transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+        style={{ scale: 2.6, transformStyle: "preserve-3d" }}
         className="relative h-[55%] w-[55%] max-h-[340px] max-w-[340px] [@media(max-height:960px)]:max-h-[190px] [@media(max-height:960px)]:max-w-[190px]"
-      />
+      >
+        {Array.from({ length: BRAIN_LAYERS }).map((_, i) => (
+          <div
+            key={i}
+            aria-hidden={i > 0}
+            style={{
+              position: "absolute",
+              inset: 0,
+              transform: `translateZ(${-i * BRAIN_LAYER_DEPTH}px)`,
+              opacity: 1 - (i / BRAIN_LAYERS) * 0.55,
+              backgroundImage: "radial-gradient(var(--accent) 0.9px, transparent 0.9px)",
+              backgroundSize: "4px 4px",
+              WebkitMaskImage: "url(/logo/moach-mark.png)",
+              maskImage: "url(/logo/moach-mark.png)",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
+        ))}
+      </motion.div>
     </div>
   );
 }
