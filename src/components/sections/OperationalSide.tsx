@@ -171,9 +171,9 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col justify-start bg-white px-6 pt-[100px] md:px-16">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="relative overflow-hidden border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
+        <div className="relative flex flex-1 flex-col justify-center overflow-hidden border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>

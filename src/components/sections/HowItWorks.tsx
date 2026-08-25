@@ -102,9 +102,9 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col justify-start bg-white px-6 pt-[100px] md:px-16">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
+        <div className="flex flex-1 flex-col justify-center border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
