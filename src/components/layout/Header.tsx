@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: "#how-it-works", label: "איך זה עובד" },
   { href: "#operations", label: "הצד התפעולי" },
   { href: "#vision", label: "חזון השירות" },
+  { href: "#integrations", label: "אינטגרציות" },
 ];
 
 function detectTheme(): "dark" | "light" {

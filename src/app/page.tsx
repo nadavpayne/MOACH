@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { OperationalSide } from "@/components/sections/OperationalSide";
 import { Vision } from "@/components/sections/Vision";
+import { Integrations } from "@/components/sections/Integrations";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <HowItWorks />
         <OperationalSide />
         <Vision />
+        <Integrations />
       </main>
     </>
   );
