@@ -44,11 +44,13 @@ function ListItem({
 
   return (
     <motion.div
-      className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2"
+      className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2 [@media(max-width:820px)]:py-1"
       style={{ borderColor }}
     >
-      <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
-      <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600 [@media(max-height:820px)]:mt-0">
+      <h3 className="text-lg font-bold text-slate-900 [@media(max-width:820px)]:text-base">
+        {item.title}
+      </h3>
+      <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600 [@media(max-height:820px)]:mt-0 [@media(max-width:820px)]:mt-0 [@media(max-width:820px)]:text-xs">
         {item.desc}
       </p>
     </motion.div>
@@ -105,16 +107,16 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5">
-          <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:pb-2">
+        <div className="flex flex-1 flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-2 [@media(max-width:820px)]:p-4">
+          <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:pb-2 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:pb-1">
             <div>
-              <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
+              <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl [@media(max-width:820px)]:text-xl">
                 לומדים את התפעול שלך, ואז מריצים אותו.
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-relaxed text-slate-600">
+            <p className="max-w-sm text-sm leading-relaxed text-slate-600 [@media(max-width:820px)]:text-xs">
               מוח מתחבר למערכות שלך ובונה מודל מותאם לכל סניף. מזג אוויר, אירועים והיסטוריית
               מכירות מניעים הזמנות, הכנה, שיבוץ ושרשרת אספקה מתוך המודל הזה, עם ההיגיון מאחורי כל
               מספר.

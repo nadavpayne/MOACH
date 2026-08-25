@@ -51,7 +51,7 @@ function FeatureRow({
 }) {
   return (
     <div
-      className={`flex items-start gap-5 border-t-2 border-white/15 py-6 transition-all duration-500 first:border-t-0 [@media(max-height:960px)]:py-0.5 ${
+      className={`flex items-start gap-5 border-t-2 border-white/15 py-6 transition-all duration-500 first:border-t-0 [@media(max-height:960px)]:py-0.5 [@media(max-width:820px)]:py-0.5 ${
         revealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
       }`}
     >
@@ -119,17 +119,17 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
   const revealedCount = useRevealedCount(progress, FEATURES.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3 [@media(max-width:820px)]:pt-[52px] [@media(max-width:820px)]:pb-3">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-1 [@media(max-height:960px)]:p-2">
+        <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-1 [@media(max-height:960px)]:p-2 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:p-2">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold tracking-widest text-accent uppercase">
               בנוי לישראל
             </p>
-            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:960px)]:mt-1">
+            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:960px)]:mt-1 [@media(max-width:820px)]:mt-1 [@media(max-width:820px)]:text-xl">
               לא תרגום של מוצר גלובלי. נבנה מההתחלה בשביל מסעדות בישראל.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-foreground-secondary [@media(max-height:960px)]:mt-1">
+            <p className="mt-4 text-base leading-relaxed text-foreground-secondary [@media(max-height:960px)]:mt-1 [@media(max-width:820px)]:mt-1 [@media(max-width:820px)]:text-xs">
               לוח שנה עברי, חוק העבודה הישראלי, מילואים ותעודות כשרות אינם &quot;תוספת&quot; — הם
               חלק מהמודל מהיום הראשון.
             </p>
