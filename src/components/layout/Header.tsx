@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { href: "#operations", label: "הצד התפעולי" },
   { href: "#vision", label: "חזון השירות" },
   { href: "#integrations", label: "אינטגרציות" },
+  { href: "#built-for-israel", label: "בנוי לישראל" },
 ];
 
 function detectTheme(): "dark" | "light" {

@@ -4,6 +4,7 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { OperationalSide } from "@/components/sections/OperationalSide";
 import { Vision } from "@/components/sections/Vision";
 import { Integrations } from "@/components/sections/Integrations";
+import { BuiltForIsrael } from "@/components/sections/BuiltForIsrael";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <OperationalSide />
         <Vision />
         <Integrations />
+        <BuiltForIsrael />
       </main>
     </>
   );
