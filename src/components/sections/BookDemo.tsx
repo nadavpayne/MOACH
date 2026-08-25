@@ -83,7 +83,10 @@ function StepRow({
 
 function DottedBrain() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
+    <div
+      className="relative flex h-full w-full -translate-y-6 items-center justify-center [@media(max-height:960px)]:-translate-y-3"
+      style={{ perspective: "1000px" }}
+    >
       <motion.div
         aria-hidden
         animate={{ opacity: [0.15, 0.32, 0.15] }}
@@ -91,10 +94,10 @@ function DottedBrain() {
         className="absolute h-64 w-64 rounded-full bg-accent blur-[100px]"
       />
       <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+        animate={{ rotateY: 360 }}
+        transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
         style={{
-          scale: 2.1,
+          scale: 2.6,
           backgroundImage: "radial-gradient(var(--accent) 0.9px, transparent 0.9px)",
           backgroundSize: "4px 4px",
           WebkitMaskImage: "url(/logo/moach-mark.png)",
@@ -105,6 +108,7 @@ function DottedBrain() {
           maskRepeat: "no-repeat",
           WebkitMaskPosition: "center",
           maskPosition: "center",
+          transformStyle: "preserve-3d",
         }}
         className="relative h-[55%] w-[55%] max-h-[340px] max-w-[340px] [@media(max-height:960px)]:max-h-[190px] [@media(max-height:960px)]:max-w-[190px]"
       />
