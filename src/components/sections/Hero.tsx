@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
-import { SectionHeaderLine } from "@/components/ui/SectionHeaderLine";
 
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const contentOpacity = useTransform(progress, [0, 0.6, 1], [1, 1, 0]);
@@ -45,7 +44,6 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         aria-hidden
         className="pointer-events-none absolute -top-1/3 left-1/4 h-[600px] w-[600px] rounded-full bg-accent/10 blur-[120px]"
       />
-      <SectionHeaderLine />
 
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
