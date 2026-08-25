@@ -4,14 +4,14 @@ import { motion, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 
 const NODES = [
-  { x: 18, y: 10, label: "תל אביב" },
-  { x: 122, y: 14, label: "חיפה" },
-  { x: 12, y: 82, label: "ירושלים" },
-  { x: 128, y: 78, label: "באר שבע" },
-  { x: 70, y: 96, label: "הסניף הבא" },
+  { x: 27, y: 24, label: "תל אביב" },
+  { x: 183, y: 30, label: "חיפה" },
+  { x: 18, y: 132, label: "ירושלים" },
+  { x: 192, y: 126, label: "באר שבע" },
+  { x: 105, y: 153, label: "הסניף הבא" },
 ];
 
-const HUB = { x: 70, y: 46 };
+const HUB = { x: 105, y: 78 };
 
 function NetworkLine({
   node,
@@ -36,7 +36,7 @@ function NetworkLine({
       strokeDasharray={1}
       style={{ strokeDashoffset: dashoffset }}
       stroke="var(--accent)"
-      strokeWidth={0.4}
+      strokeWidth={0.68}
       strokeLinecap="round"
     />
   );
@@ -53,7 +53,7 @@ function NetworkNode({
 }) {
   const segStart = index / NODES.length;
   const segEnd = segStart + 1 / NODES.length;
-  const radius = useTransform(progress, [segStart, segEnd - 0.05, segEnd], [0.6, 2.6, 2.1]);
+  const radius = useTransform(progress, [segStart, segEnd - 0.05, segEnd], [1.0, 4.4, 3.6]);
   const opacity = useTransform(progress, [segStart, segStart + 0.02], [0, 1]);
 
   return <motion.circle cx={node.x} cy={node.y} r={radius} fill="var(--accent)" style={{ opacity }} />;
@@ -74,9 +74,9 @@ function NodeLabel({
   return (
     <motion.text
       x={node.x}
-      y={node.y + 8}
+      y={node.y + 14}
       textAnchor="middle"
-      style={{ opacity, fontSize: "4.4px", fontWeight: 600 }}
+      style={{ opacity, fontSize: "15px", fontWeight: 600 }}
       className="fill-foreground/70"
     >
       {node.label}
@@ -87,7 +87,7 @@ function NodeLabel({
 function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
   const hubGlowScale = useTransform(progress, [0, 1], [0.6, 1.5]);
   const hubGlowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.4, 0.3]);
-  const hubRadius = useTransform(progress, [0, 1], [4, 6.5]);
+  const hubRadius = useTransform(progress, [0, 1], [7, 11]);
 
   return (
     <div className="relative h-full w-full">
@@ -96,7 +96,7 @@ function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
         style={{ scale: hubGlowScale, opacity: hubGlowOpacity }}
         className="absolute top-1/2 left-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent blur-[70px]"
       />
-      <svg viewBox="0 0 140 100" className="relative h-full w-full" preserveAspectRatio="xMaxYMid meet">
+      <svg viewBox="0 0 210 170" className="relative h-full w-full" preserveAspectRatio="xMidYMid meet">
         {NODES.map((node, i) => (
           <NetworkLine key={node.label} node={node} index={i} progress={progress} />
         ))}
