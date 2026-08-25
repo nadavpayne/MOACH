@@ -86,7 +86,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden rounded-xl border-2 border-slate-300 bg-slate-50 md:flex">
+    <div className="relative hidden min-h-[480px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.4]"
@@ -104,7 +104,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
     <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="rounded-2xl border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+        <div className="border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">

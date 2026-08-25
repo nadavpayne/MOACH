@@ -32,21 +32,50 @@ function useHeaderTheme() {
   return theme;
 }
 
+function useIsScrolling() {
+  const { scrollY } = useScroll();
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    const unsubscribe = scrollY.on("change", () => {
+      setIsScrolling(true);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setIsScrolling(false), 250);
+    });
+    return () => {
+      unsubscribe();
+      clearTimeout(timeout);
+    };
+  }, [scrollY]);
+
+  return isScrolling;
+}
+
 export function Header() {
   const theme = useHeaderTheme();
   const isLight = theme === "light";
+  const isScrolling = useIsScrolling();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[72px]">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg"
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg transition-opacity duration-300 ${
+          isScrolling ? "opacity-100" : "opacity-0"
+        }`}
         style={{
           maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
           WebkitMaskImage:
             "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
         }}
+      />
+      <div
+        aria-hidden
+        className={`absolute inset-x-0 top-full h-px transition-colors duration-300 ${
+          isLight ? "bg-slate-200" : "bg-white/10"
+        }`}
       />
 
       <div className="relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16">

@@ -95,7 +95,7 @@ function OrdersMockup() {
       {rows.map((row) => (
         <div
           key={row.name}
-          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
           <span className="text-sm font-medium text-slate-900">{row.name}</span>
           <span className="text-xs text-accent">{row.status}</span>
@@ -117,7 +117,7 @@ function WorkforceMockup() {
       {shifts.map((shift) => (
         <div
           key={shift.name}
-          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
           <span className="text-sm font-medium text-slate-900">{shift.name}</span>
           {shift.tag && (
@@ -142,7 +142,7 @@ function SupplyChainMockup() {
       {suppliers.map((s) => (
         <div
           key={s.name}
-          className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
         >
           <span className="text-sm font-medium text-slate-900">{s.name}</span>
           <span className="text-xs text-slate-500">{s.days}</span>
@@ -173,7 +173,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   return (
     <div className="flex h-full flex-col justify-center bg-white px-6 md:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+        <div className="relative overflow-hidden border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>
@@ -185,7 +185,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
               ))}
             </div>
 
-            <div className="relative hidden min-h-[360px] overflow-hidden rounded-xl border-2 border-slate-300 bg-white md:block">
+            <div className="relative hidden min-h-[360px] overflow-hidden border-2 border-slate-300 bg-white md:block">
               {STEPS.map((_, i) => (
                 <StepMockup key={i} index={i} active={i === active} />
               ))}
