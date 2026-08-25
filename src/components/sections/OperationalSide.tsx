@@ -171,28 +171,28 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full min-h-0 flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
-      <div className="mx-auto flex w-full min-h-0 max-w-6xl flex-1 flex-col">
-        <div className="relative flex min-h-0 flex-1 flex-col justify-center gap-6 overflow-y-auto border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
-          <p className="shrink-0 text-xs font-semibold tracking-widest text-accent uppercase">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="relative flex flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+          <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>
 
-          <div className="grid shrink-0 grid-cols-1 gap-10 md:grid-cols-2">
-            <div className="relative min-h-[220px]">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            <div className="relative h-[260px]">
               {STEPS.map((step, i) => (
                 <StepText key={step.number} step={step} active={i === active} />
               ))}
             </div>
 
-            <div className="relative hidden min-h-[220px] overflow-hidden border-2 border-slate-300 bg-white md:block">
+            <div className="relative hidden h-[260px] overflow-hidden border-2 border-slate-300 bg-white md:block">
               {STEPS.map((_, i) => (
                 <StepMockup key={i} index={i} active={i === active} />
               ))}
             </div>
           </div>
 
-          <div className="flex shrink-0 justify-end gap-2">
+          <div className="flex justify-end gap-2">
             {STEPS.map((step, i) => (
               <StepDot key={step.number} active={i === active} />
             ))}

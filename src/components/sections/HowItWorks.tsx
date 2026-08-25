@@ -44,11 +44,13 @@ function ListItem({
 
   return (
     <motion.div
-      className="relative border-t-4 py-6 first:border-t-0"
+      className="relative border-t-4 py-6 first:border-t-0 [@media(max-height:820px)]:py-2"
       style={{ borderColor }}
     >
       <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
-      <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">{item.desc}</p>
+      <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600 [@media(max-height:820px)]:mt-0">
+        {item.desc}
+      </p>
     </motion.div>
   );
 }
@@ -78,7 +80,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
           WebkitMaskPosition: "center",
           maskPosition: "center",
         }}
-        className="relative h-[320px] w-[320px]"
+        className="relative h-[55%] w-[55%] max-h-[280px] max-w-[280px] [@media(max-height:820px)]:max-h-[190px] [@media(max-height:820px)]:max-w-[190px]"
       />
     </div>
   );
@@ -86,7 +88,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden min-h-[220px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex">
+    <div className="relative hidden h-[280px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex [@media(max-height:820px)]:h-[200px]">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.4]"
@@ -102,10 +104,10 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full min-h-0 flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
-      <div className="mx-auto flex w-full min-h-0 max-w-6xl flex-1 flex-col">
-        <div className="flex min-h-0 flex-1 flex-col justify-center gap-6 overflow-y-auto border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
-          <div className="flex shrink-0 flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="flex flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5">
+          <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:pb-2">
             <div>
               <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
                 לומדים את התפעול שלך, ואז מריצים אותו.
@@ -118,7 +120,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
             </p>
           </div>
 
-          <div className="grid shrink-0 grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
             <div>
               {ITEMS.map((item, i) => (
                 <ListItem key={item.title} item={item} index={i} progress={progress} />
