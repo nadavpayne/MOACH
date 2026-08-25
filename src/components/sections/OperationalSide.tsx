@@ -69,9 +69,9 @@ function DemandMockup() {
       <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 uppercase">
         תחזית שבועית
       </p>
-      <div className="flex h-40 items-end gap-3">
+      <div className="flex h-40 gap-3">
         {heights.map((h, i) => (
-          <div key={i} className="flex flex-1 flex-col items-center gap-2">
+          <div key={i} className="flex flex-1 flex-col items-center justify-end gap-2">
             <div
               className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-slate-300"}`}
               style={{ height: `${h}%` }}
