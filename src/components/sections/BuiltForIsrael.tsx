@@ -78,8 +78,8 @@ function FeatureRow({
 }
 
 function GrowingIsrael({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 1], [0.25, 1.25]);
-  const glowScale = useTransform(progress, [0, 1], [0.4, 1.4]);
+  const scale = useTransform(progress, [0, 1], [0.625, 3.125]);
+  const glowScale = useTransform(progress, [0, 1], [1, 3.5]);
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
   const revealedCities = useRevealedCount(progress, CITIES.length);
 
