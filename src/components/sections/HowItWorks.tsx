@@ -44,7 +44,7 @@ function ListItem({
 
   return (
     <motion.div
-      className="relative border-b-4 py-6 last:border-b-0 [@media(max-height:820px)]:py-2"
+      className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2"
       style={{ borderColor }}
     >
       <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
@@ -56,8 +56,9 @@ function ListItem({
 }
 
 function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 1], [0.15, 1.7]);
-  const glowScale = useTransform(progress, [0, 1], [0.3, 1.9]);
+  const lastStepStart = (ITEMS.length - 1) / ITEMS.length;
+  const scale = useTransform(progress, [0, lastStepStart, 1], [0.15, 1.35, 2.1]);
+  const glowScale = useTransform(progress, [0, lastStepStart, 1], [0.3, 1.45, 2.3]);
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
 
   return (
