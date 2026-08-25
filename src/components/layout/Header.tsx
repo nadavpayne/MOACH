@@ -39,6 +39,16 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[72px]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
+        }}
+      />
+
       <div className="relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16">
         <a href="#" className="flex shrink-0 items-center gap-2.5">
           <Image

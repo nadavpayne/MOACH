@@ -107,10 +107,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
         <div className="rounded-2xl border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-xs font-semibold tracking-widest text-accent uppercase">
-                איך זה עובד
-              </p>
-              <h2 className="mt-3 max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
+              <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
                 לומדים את התפעול שלך, ואז מריצים אותו.
               </h2>
             </div>
