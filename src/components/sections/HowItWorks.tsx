@@ -105,8 +105,8 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
     <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="flex flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
+        <div className="flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:pb-2">
             <div>
               <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
