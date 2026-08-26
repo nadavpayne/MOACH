@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { BOOKING_URL } from "@/lib/constants";
 
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const contentOpacity = useTransform(progress, [0, 0.6, 1], [1, 1, 0]);
@@ -60,7 +61,9 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
 
         <div className="mt-10">
           <a
-            href="#demo"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-base font-semibold text-foreground transition-colors hover:bg-accent-secondary"
           >
             ראו את המוח בפעולה

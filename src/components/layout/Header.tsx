@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useScroll, useMotionValueEvent } from "framer-motion";
+import { BOOKING_URL } from "@/lib/constants";
 
 const NAV_LINKS = [
   { href: "#how-it-works", label: "איך זה עובד" },
@@ -121,7 +122,9 @@ export function Header() {
         </nav>
 
         <a
-          href="#demo"
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="ms-auto hidden bg-accent px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent-secondary md:inline-flex"
         >
           קבעו דמו
@@ -154,7 +157,9 @@ export function Header() {
               </a>
             ))}
             <a
-              href="#demo"
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
               className="mt-2 inline-flex justify-center bg-accent px-5 py-2.5 text-sm font-semibold text-foreground"
             >

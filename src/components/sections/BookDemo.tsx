@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { BOOKING_URL } from "@/lib/constants";
 
 const STEPS = [
   {
@@ -69,7 +70,9 @@ function StepRow({
         </p>
         {step.cta && (
           <a
-            href="#demo"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent-secondary [@media(max-height:960px)]:mt-2 [@media(max-height:960px)]:py-1.5 [@media(max-width:820px)]:mt-1.5 [@media(max-width:820px)]:px-4 [@media(max-width:820px)]:py-1.5"
           >
             קבעו דמו
