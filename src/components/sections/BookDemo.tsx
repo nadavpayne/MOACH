@@ -103,8 +103,8 @@ function DottedBrain() {
         initial={{ rotate: 0, rotateX: 0, rotateY: 0 }}
         animate={{ rotate: 0, rotateX: 0, rotateY: 360 }}
         transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-        style={{ scale: 2.6, transformStyle: "preserve-3d" }}
-        className="relative h-[55%] w-[55%] max-h-[340px] max-w-[340px] [@media(max-height:960px)]:max-h-[190px] [@media(max-height:960px)]:max-w-[190px]"
+        style={{ transformStyle: "preserve-3d" }}
+        className="relative h-[85%] w-[85%] max-h-[340px] max-w-[340px] [@media(max-height:960px)]:max-h-[190px] [@media(max-height:960px)]:max-w-[190px]"
       >
         {Array.from({ length: BRAIN_LAYERS }).map((_, i) => (
           <div
