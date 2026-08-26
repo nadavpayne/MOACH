@@ -94,12 +94,6 @@ function DottedBrain() {
       style={{ perspective: "1200px" }}
     >
       <motion.div
-        aria-hidden
-        animate={{ opacity: [0.15, 0.32, 0.15] }}
-        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-        className="absolute h-64 w-64 rounded-full bg-accent blur-[100px]"
-      />
-      <motion.div
         initial={{ rotate: 0, rotateX: 0, rotateY: 0 }}
         animate={{ rotate: 0, rotateX: 0, rotateY: 360 }}
         transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
@@ -161,7 +155,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
                 />
               ))}
             </div>
-            <div className="relative h-[130px] overflow-hidden md:h-[360px] md:flex-1 [@media(max-height:960px)]:h-[220px] [@media(max-width:820px)]:h-[110px]">
+            <div className="relative h-[210px] overflow-hidden md:h-[560px] md:flex-1 [@media(max-height:960px)]:h-[330px] [@media(max-width:820px)]:h-[175px]">
               <DottedBrain />
             </div>
           </div>

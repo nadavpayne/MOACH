@@ -82,17 +82,10 @@ function FeatureRow({
 
 function GrowingIsrael({ progress }: { progress: MotionValue<number> }) {
   const scale = useTransform(progress, [0, 1], [0.5, 1.3]);
-  const glowScale = useTransform(progress, [0, 1], [1, 3.5]);
-  const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.35, 0.25]);
   const revealedCities = useRevealedCount(progress, CITIES.length);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      <motion.div
-        aria-hidden
-        style={{ scale: glowScale, opacity: glowOpacity }}
-        className="absolute h-56 w-56 rounded-full bg-accent blur-[90px]"
-      />
       <motion.div style={{ scale }} className="relative h-[75%] w-auto">
         <svg
           viewBox="0 0 100 200"
@@ -144,7 +137,7 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
                 <FeatureRow key={feature.title} feature={feature} revealed={i < revealedCount} />
               ))}
             </div>
-            <div className="relative h-[150px] overflow-hidden md:h-[320px] md:flex-1 [@media(max-height:960px)]:h-[200px] [@media(max-width:820px)]:h-[95px]">
+            <div className="relative h-[240px] overflow-hidden md:h-[480px] md:flex-1 [@media(max-height:960px)]:h-[260px] [@media(max-width:820px)]:h-[150px]">
               <GrowingIsrael progress={progress} />
             </div>
           </div>
