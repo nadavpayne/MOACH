@@ -134,24 +134,24 @@ function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
 
 function VisionContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col gap-10 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5">
-          <div className="flex flex-1 flex-col gap-10 md:flex-row md:items-center [@media(max-height:820px)]:gap-4">
-            <div className="flex-1">
+        <div className="flex flex-1 flex-col gap-10 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-4">
+          <div className="flex flex-col gap-10 md:flex-1 md:flex-row md:items-center [@media(max-height:820px)]:gap-4 [@media(max-width:820px)]:gap-3">
+            <div className="md:flex-1">
               <p className="text-xs font-semibold tracking-widest text-accent uppercase">
                 חזון השירות
               </p>
-              <h2 className="mt-4 max-w-xl text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:820px)]:mt-2">
+              <h2 className="mt-4 max-w-xl text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:820px)]:mt-2 [@media(max-width:820px)]:mt-2 [@media(max-width:820px)]:text-xl">
                 כל סניף שמצטרף, הופך את כל הרשת לחכמה יותר.
               </h2>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-foreground-secondary [@media(max-height:820px)]:mt-3">
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-foreground-secondary [@media(max-height:820px)]:mt-3 [@media(max-width:820px)]:mt-2 [@media(max-width:820px)]:text-xs">
                 מוח לא מתחיל מאפס בכל סניף חדש. כל תחזית שהתבררה נכונה וכל תיקון שנעשה בשטח
                 הופכים לחלק מהמודל המשותף — כך שסניף חדש לא לומד לבד, אלא יורש את הניסיון שכל
                 הרשת צברה, מהיום הראשון.
               </p>
             </div>
-            <div className="hidden h-[320px] flex-1 md:block [@media(max-height:820px)]:h-[200px]">
+            <div className="h-[160px] md:h-[320px] md:flex-1 [@media(max-height:820px)]:h-[200px] [@media(max-width:820px)]:h-[130px]">
               <NetworkVisual progress={progress} />
             </div>
           </div>

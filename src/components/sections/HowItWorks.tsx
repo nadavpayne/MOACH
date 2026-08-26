@@ -44,7 +44,7 @@ function ListItem({
 
   return (
     <motion.div
-      className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2 [@media(max-width:820px)]:py-1"
+      className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2 [@media(max-width:820px)]:py-0.5"
       style={{ borderColor }}
     >
       <h3 className="text-lg font-bold text-slate-900 [@media(max-width:820px)]:text-base">
@@ -91,7 +91,7 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
 
 function VisualPanel({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative hidden h-full items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:flex md:flex-1">
+    <div className="relative flex h-[150px] items-center justify-center overflow-hidden border-2 border-slate-300 bg-slate-50 md:h-full md:flex-1 [@media(max-width:820px)]:h-[90px]">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.4]"

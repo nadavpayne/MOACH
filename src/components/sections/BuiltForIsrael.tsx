@@ -55,7 +55,7 @@ function FeatureRow({
         revealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
       }`}
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent [@media(max-width:820px)]:h-7 [@media(max-width:820px)]:w-7">
         <svg
           width="18"
           height="18"
@@ -63,13 +63,16 @@ function FeatureRow({
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
+          className="[@media(max-width:820px)]:h-3.5 [@media(max-width:820px)]:w-3.5"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
       </div>
       <div>
-        <h3 className="text-lg font-extrabold text-foreground">{feature.title}</h3>
-        <p className="mt-1 max-w-xl text-sm leading-relaxed text-foreground-secondary">
+        <h3 className="text-lg font-extrabold text-foreground [@media(max-width:820px)]:text-sm">
+          {feature.title}
+        </h3>
+        <p className="mt-1 max-w-xl text-sm leading-relaxed text-foreground-secondary [@media(max-width:820px)]:text-xs">
           {feature.desc}
         </p>
       </div>
@@ -119,7 +122,7 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
   const revealedCount = useRevealedCount(progress, FEATURES.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3 [@media(max-width:820px)]:pt-[52px] [@media(max-width:820px)]:pb-3">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3 [@media(max-width:820px)]:pt-[60px] [@media(max-width:820px)]:pb-2">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-1 [@media(max-height:960px)]:p-2 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:p-2">
           <div className="max-w-2xl">
@@ -135,13 +138,13 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
             </p>
           </div>
 
-          <div className="flex flex-1 flex-col gap-8 md:flex-row md:items-center">
-            <div className="flex flex-1 flex-col justify-center">
+          <div className="flex flex-col gap-4 md:flex-1 md:flex-row md:items-center md:gap-8">
+            <div className="flex flex-col md:flex-1 md:justify-center">
               {FEATURES.map((feature, i) => (
                 <FeatureRow key={feature.title} feature={feature} revealed={i < revealedCount} />
               ))}
             </div>
-            <div className="hidden h-[320px] flex-1 md:block [@media(max-height:960px)]:h-[200px]">
+            <div className="relative h-[150px] overflow-hidden md:h-[320px] md:flex-1 [@media(max-height:960px)]:h-[200px] [@media(max-width:820px)]:h-[95px]">
               <GrowingIsrael progress={progress} />
             </div>
           </div>

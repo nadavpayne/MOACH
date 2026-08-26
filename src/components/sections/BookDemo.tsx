@@ -45,32 +45,32 @@ function StepRow({
   isLast: boolean;
 }) {
   return (
-    <div className="relative flex gap-5 pb-10 last:pb-0 [@media(max-height:960px)]:pb-1">
+    <div className="relative flex gap-5 pb-10 last:pb-0 [@media(max-height:960px)]:pb-1 [@media(max-width:820px)]:pb-1">
       {!isLast && (
         <div
-          className={`absolute right-5 top-10 bottom-0 w-px transition-colors duration-500 [@media(max-height:960px)]:top-8 ${
+          className={`absolute right-5 top-10 bottom-0 w-px transition-colors duration-500 [@media(max-height:960px)]:top-8 [@media(max-width:820px)]:top-8 ${
             active ? "bg-accent/40" : "bg-white/10"
           }`}
         />
       )}
       <div
-        className={`flex h-10 w-10 shrink-0 items-center justify-center border text-sm font-bold transition-all duration-500 [@media(max-height:960px)]:h-8 [@media(max-height:960px)]:w-8 [@media(max-height:960px)]:text-xs ${
+        className={`flex h-10 w-10 shrink-0 items-center justify-center border text-sm font-bold transition-all duration-500 [@media(max-height:960px)]:h-8 [@media(max-height:960px)]:w-8 [@media(max-height:960px)]:text-xs [@media(max-width:820px)]:h-7 [@media(max-width:820px)]:w-7 [@media(max-width:820px)]:text-xs ${
           active ? "border-accent bg-accent text-foreground" : "border-white/15 text-foreground-secondary"
         }`}
       >
         {index + 1}
       </div>
       <div className={`transition-opacity duration-500 ${active ? "opacity-100" : "opacity-35"}`}>
-        <h3 className="text-lg font-extrabold text-foreground md:text-xl [@media(max-height:960px)]:text-base">
+        <h3 className="text-lg font-extrabold text-foreground md:text-xl [@media(max-height:960px)]:text-base [@media(max-width:820px)]:text-sm">
           {step.title}
         </h3>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-secondary [@media(max-height:960px)]:mt-0.5 [@media(max-height:960px)]:text-xs">
+        <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-secondary [@media(max-height:960px)]:mt-0.5 [@media(max-height:960px)]:text-xs [@media(max-width:820px)]:mt-0.5 [@media(max-width:820px)]:text-xs">
           {step.desc}
         </p>
         {step.cta && (
           <a
             href="#demo"
-            className="mt-5 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent-secondary [@media(max-height:960px)]:mt-2 [@media(max-height:960px)]:py-1.5"
+            className="mt-5 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent-secondary [@media(max-height:960px)]:mt-2 [@media(max-height:960px)]:py-1.5 [@media(max-width:820px)]:mt-1.5 [@media(max-width:820px)]:px-4 [@media(max-width:820px)]:py-1.5"
           >
             קבעו דמו
             <span aria-hidden>←</span>
@@ -134,20 +134,20 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
   const activeCount = useActiveCount(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[64px] [@media(max-height:960px)]:pb-6">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[64px] [@media(max-height:960px)]:pb-6 [@media(max-width:820px)]:pt-[52px] [@media(max-width:820px)]:pb-3">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-3 [@media(max-height:960px)]:p-5">
+        <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-3 [@media(max-height:960px)]:p-5 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:p-2">
           <div className="max-w-xl">
             <p className="text-xs font-semibold tracking-widest text-accent uppercase">
               בואו נתחיל
             </p>
-            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:960px)]:mt-2">
+            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground md:text-5xl [@media(max-height:960px)]:mt-2 [@media(max-width:820px)]:mt-1 [@media(max-width:820px)]:text-xl">
               ככה זה מתחיל.
             </h2>
           </div>
 
-          <div className="flex flex-1 flex-col gap-8 md:flex-row md:items-center">
-            <div className="flex flex-1 flex-col justify-center">
+          <div className="flex flex-col gap-4 md:flex-1 md:flex-row md:items-center md:gap-8">
+            <div className="flex flex-col md:flex-1 md:justify-center">
               {STEPS.map((step, i) => (
                 <StepRow
                   key={step.title}
@@ -158,7 +158,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
                 />
               ))}
             </div>
-            <div className="hidden h-[360px] flex-1 md:block [@media(max-height:960px)]:h-[220px]">
+            <div className="h-[130px] md:h-[360px] md:flex-1 [@media(max-height:960px)]:h-[220px] [@media(max-width:820px)]:h-[110px]">
               <DottedBrain />
             </div>
           </div>

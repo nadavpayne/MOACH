@@ -43,11 +43,15 @@ function StepText({ step, active }: { step: (typeof STEPS)[number]; active: bool
         active ? "opacity-100 translate-y-0" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >
-      <span className="text-7xl font-extrabold text-slate-900/10 md:text-8xl">
+      <span className="text-4xl font-extrabold text-slate-900/10 [@media(min-width:821px)]:text-7xl md:text-8xl">
         {step.number}
       </span>
-      <h3 className="mt-4 text-2xl font-extrabold text-slate-900 md:text-3xl">{step.title}</h3>
-      <p className="mt-4 max-w-md text-base leading-relaxed text-slate-600">{step.desc}</p>
+      <h3 className="mt-2 text-lg font-extrabold text-slate-900 [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-2xl md:text-3xl">
+        {step.title}
+      </h3>
+      <p className="mt-1 max-w-md text-xs leading-relaxed text-slate-600 [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-base">
+        {step.desc}
+      </p>
     </div>
   );
 }
@@ -171,21 +175,21 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="relative flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12">
+        <div className="relative flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-5">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            <div className="relative h-[260px]">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
+            <div className="relative h-[170px] md:h-[260px]">
               {STEPS.map((step, i) => (
                 <StepText key={step.number} step={step} active={i === active} />
               ))}
             </div>
 
-            <div className="relative hidden h-[260px] overflow-hidden border-2 border-slate-300 bg-white md:block">
+            <div className="relative h-[150px] overflow-hidden border-2 border-slate-300 bg-white md:h-[260px]">
               {STEPS.map((_, i) => (
                 <StepMockup key={i} index={i} active={i === active} />
               ))}
