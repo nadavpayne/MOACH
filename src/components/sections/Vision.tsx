@@ -95,18 +95,11 @@ function useRevealedCount(progress: MotionValue<number>, total: number) {
 }
 
 function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
-  const hubGlowScale = useTransform(progress, [0, 1], [0.6, 1.5]);
-  const hubGlowOpacity = useTransform(progress, [0, 0.5, 1], [0.15, 0.4, 0.3]);
   const hubRadius = useTransform(progress, [0, 1], [7, 11]);
   const revealedCount = useRevealedCount(progress, NODES.length);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      <motion.div
-        aria-hidden
-        style={{ scale: hubGlowScale, opacity: hubGlowOpacity }}
-        className="absolute top-1/2 left-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent blur-[70px]"
-      />
       <div
         className="relative max-h-full max-w-full"
         style={{ aspectRatio: `${VIEWBOX_WIDTH} / ${VIEWBOX_HEIGHT}`, height: "100%" }}
