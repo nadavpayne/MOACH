@@ -3,3 +3,5 @@ node_modules
 .playwright-cli
 *.log
 *.tsbuildinfo
+.env
+.env*.local
