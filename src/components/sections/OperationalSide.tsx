@@ -175,7 +175,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="relative flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-5">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
@@ -209,7 +209,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
 
 export function OperationalSide() {
   return (
-    <section id="operations" data-header-theme="light">
+    <section id="operations" data-header-theme="light" className="scroll-mt-[90px]">
       <ScrollStage heightVh={340}>
         {(progress) => <OperationalSideContent progress={progress} />}
       </ScrollStage>

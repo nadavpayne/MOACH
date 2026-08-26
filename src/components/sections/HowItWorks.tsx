@@ -107,7 +107,7 @@ function VisualPanel({ progress }: { progress: MotionValue<number> }) {
 
 function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
+    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-2 [@media(max-width:820px)]:p-4">
           <div className="flex flex-col gap-6 border-b-2 border-slate-300 pb-8 md:flex-row md:items-end md:justify-between [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:pb-2 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:pb-1">
@@ -139,7 +139,7 @@ function HowItWorksContent({ progress }: { progress: MotionValue<number> }) {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" data-header-theme="light">
+    <section id="how-it-works" data-header-theme="light" className="scroll-mt-[90px]">
       <ScrollStage heightVh={320}>
         {(progress) => <HowItWorksContent progress={progress} />}
       </ScrollStage>

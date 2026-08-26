@@ -17,8 +17,14 @@ export function ScrollStage({
   });
 
   return (
-    <div ref={ref} style={{ height: `${heightVh}vh` }} className="relative">
-      <div className="sticky top-0 h-screen overflow-hidden">{children(scrollYProgress)}</div>
+    <div
+      ref={ref}
+      style={{ "--stage-height": `${heightVh}vh` } as React.CSSProperties}
+      className="relative md:h-[var(--stage-height)]"
+    >
+      <div className="md:sticky md:top-0 md:h-screen md:overflow-hidden">
+        {children(scrollYProgress)}
+      </div>
     </div>
   );
 }

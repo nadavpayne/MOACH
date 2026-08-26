@@ -134,7 +134,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
   const activeCount = useActiveCount(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[64px] [@media(max-height:960px)]:pb-6 [@media(max-width:820px)]:pt-[52px] [@media(max-width:820px)]:pb-3">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[64px] [@media(max-height:960px)]:pb-6 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-3">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-3 [@media(max-height:960px)]:p-5 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:p-2">
           <div className="max-w-xl">
@@ -158,7 +158,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
                 />
               ))}
             </div>
-            <div className="h-[130px] md:h-[360px] md:flex-1 [@media(max-height:960px)]:h-[220px] [@media(max-width:820px)]:h-[110px]">
+            <div className="relative h-[130px] overflow-hidden md:h-[360px] md:flex-1 [@media(max-height:960px)]:h-[220px] [@media(max-width:820px)]:h-[110px]">
               <DottedBrain />
             </div>
           </div>
@@ -170,7 +170,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
 
 export function BookDemo() {
   return (
-    <section id="demo" data-header-theme="dark">
+    <section id="demo" data-header-theme="dark" className="scroll-mt-[90px]">
       <ScrollStage heightVh={300}>
         {(progress) => <BookDemoContent progress={progress} />}
       </ScrollStage>

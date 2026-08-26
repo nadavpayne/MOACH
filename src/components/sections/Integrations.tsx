@@ -49,7 +49,7 @@ function IntegrationsContent({ progress }: { progress: MotionValue<number> }) {
   const revealedCount = useRevealedCount(progress, CARDS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-6 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-6">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-6 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-6">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:820px)]:gap-2 [@media(max-height:820px)]:p-4 [@media(max-width:820px)]:gap-2 [@media(max-width:820px)]:p-4">
           <div>
@@ -78,7 +78,7 @@ function IntegrationsContent({ progress }: { progress: MotionValue<number> }) {
 
 export function Integrations() {
   return (
-    <section id="integrations" data-header-theme="dark">
+    <section id="integrations" data-header-theme="dark" className="scroll-mt-[90px]">
       <ScrollStage heightVh={260}>
         {(progress) => <IntegrationsContent progress={progress} />}
       </ScrollStage>

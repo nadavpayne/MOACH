@@ -134,7 +134,7 @@ function NetworkVisual({ progress }: { progress: MotionValue<number> }) {
 
 function VisionContent({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6 [@media(max-width:820px)]:pt-[64px] [@media(max-width:820px)]:pb-4">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[72px] [@media(max-height:820px)]:pb-6 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-10 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-4">
           <div className="flex flex-col gap-10 md:flex-1 md:flex-row md:items-center [@media(max-height:820px)]:gap-4 [@media(max-width:820px)]:gap-3">
@@ -151,7 +151,7 @@ function VisionContent({ progress }: { progress: MotionValue<number> }) {
                 הרשת צברה, מהיום הראשון.
               </p>
             </div>
-            <div className="h-[160px] md:h-[320px] md:flex-1 [@media(max-height:820px)]:h-[200px] [@media(max-width:820px)]:h-[130px]">
+            <div className="relative h-[160px] overflow-hidden md:h-[320px] md:flex-1 [@media(max-height:820px)]:h-[200px] [@media(max-width:820px)]:h-[130px]">
               <NetworkVisual progress={progress} />
             </div>
           </div>
@@ -163,7 +163,7 @@ function VisionContent({ progress }: { progress: MotionValue<number> }) {
 
 export function Vision() {
   return (
-    <section id="vision" data-header-theme="dark">
+    <section id="vision" data-header-theme="dark" className="scroll-mt-[90px]">
       <ScrollStage heightVh={340}>
         {(progress) => <VisionContent progress={progress} />}
       </ScrollStage>

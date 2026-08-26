@@ -122,7 +122,7 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
   const revealedCount = useRevealedCount(progress, FEATURES.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3 [@media(max-width:820px)]:pt-[60px] [@media(max-width:820px)]:pb-2">
+    <div className="relative flex h-full flex-col bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:960px)]:pt-[52px] [@media(max-height:960px)]:pb-3 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-2">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <div className="flex flex-1 flex-col gap-8 border-2 border-white/15 bg-white/[0.03] p-8 md:p-12 [@media(max-height:960px)]:gap-1 [@media(max-height:960px)]:p-2 [@media(max-width:820px)]:gap-1 [@media(max-width:820px)]:p-2">
           <div className="max-w-2xl">
@@ -156,7 +156,7 @@ function BuiltForIsraelContent({ progress }: { progress: MotionValue<number> }) 
 
 export function BuiltForIsrael() {
   return (
-    <section id="built-for-israel" data-header-theme="dark">
+    <section id="built-for-israel" data-header-theme="dark" className="scroll-mt-[90px]">
       <ScrollStage heightVh={280}>
         {(progress) => <BuiltForIsraelContent progress={progress} />}
       </ScrollStage>
