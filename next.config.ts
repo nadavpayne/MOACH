@@ -27,6 +27,11 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
+    // Security headers (CSP, X-Frame-Options, etc.) are production-only.
+    // They have no value on a localhost-only dev server, and things like
+    // X-Frame-Options: DENY or CSP can interfere with dev tooling (preview
+    // panes, browser extensions, HMR) in ways that aren't worth chasing.
+    if (isDev) return [];
     return [
       {
         source: "/:path*",
