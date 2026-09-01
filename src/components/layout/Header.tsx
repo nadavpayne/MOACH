@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import { BOOKING_URL } from "@/lib/constants";
@@ -115,14 +115,57 @@ function useHeaderBlur() {
   return blur;
 }
 
+// Mobile only. The header stays put across the hero - the "first page" - and
+// past that it tucks away on downward scroll and returns on any upward
+// scroll, so it is never covering copy while reading.
+//
+// Translates by more than its own 72px height: the blur overlay it contains
+// is 140px tall and hangs below it, so a plain -translate-y-full would leave
+// a band of blur stranded on screen.
+function isPastFirstPage(y: number): boolean {
+  const hero = document.querySelector("main")?.firstElementChild as HTMLElement | null;
+  if (!hero) return false;
+  return y >= layoutTop(hero) + hero.offsetHeight;
+}
+
+function useHeaderTucked(menuOpen: boolean) {
+  const { scrollY } = useScroll();
+  const [tucked, setTucked] = useState(false);
+  const lastY = useRef(0);
+
+  // Landing already past the hero (a refresh mid-page, or a #anchor) should
+  // start tucked, same as if it had been scrolled to.
+  useEffect(() => {
+    lastY.current = window.scrollY;
+    setTucked(isPastFirstPage(window.scrollY));
+  }, []);
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const delta = y - lastY.current;
+    // Ignore sub-threshold jitter and momentum rubber-banding, which would
+    // otherwise flap the header on tiny direction reversals.
+    if (Math.abs(delta) < 6) return;
+    lastY.current = y;
+    setTucked(isPastFirstPage(y) && delta > 0);
+  });
+
+  // Never tuck away an open menu out from under the reader.
+  return tucked && !menuOpen;
+}
+
 export function Header() {
   const theme = useHeaderTheme();
   const isLight = theme === "light";
   const showBlur = useHeaderBlur();
   const [menuOpen, setMenuOpen] = useState(false);
+  const tucked = useHeaderTucked(menuOpen);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-[72px]">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 h-[72px] [@media(max-width:767px)]:transition-transform [@media(max-width:767px)]:duration-300 [@media(max-width:767px)]:ease-out ${
+        tucked ? "[@media(max-width:767px)]:-translate-y-[150px]" : ""
+      }`}
+    >
       <div
         aria-hidden
         className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg transition-opacity duration-150 ${
