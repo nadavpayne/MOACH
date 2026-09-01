@@ -138,6 +138,7 @@ function isPastFirstPage(y: number): boolean {
 function useHeaderTucked(menuOpen: boolean) {
   const { scrollY } = useScroll();
   const [tucked, setTucked] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const lastY = useRef(0);
 
   // Landing already past the hero (a refresh mid-page, or a #anchor) should
@@ -145,6 +146,7 @@ function useHeaderTucked(menuOpen: boolean) {
   useEffect(() => {
     lastY.current = window.scrollY;
     setTucked(isPastFirstPage(window.scrollY));
+    setScrolled(window.scrollY > 8);
   }, []);
 
   useMotionValueEvent(scrollY, "change", (y) => {
@@ -153,6 +155,7 @@ function useHeaderTucked(menuOpen: boolean) {
     // ignore momentum rubber-banding flapping it on tiny reversals.
     if (Math.abs(delta) < 4) return;
     lastY.current = y;
+    setScrolled(y > 8);
     // Resting at the very top there is nothing to get out of the way of.
     if (y < 8) {
       setTucked(false);
@@ -162,7 +165,7 @@ function useHeaderTucked(menuOpen: boolean) {
   });
 
   // Never tuck away an open menu out from under the reader.
-  return tucked && !menuOpen;
+  return { tucked: tucked && !menuOpen, scrolled };
 }
 
 export function Header() {
@@ -170,7 +173,7 @@ export function Header() {
   const isLight = theme === "light";
   const showBlur = useHeaderBlur();
   const [menuOpen, setMenuOpen] = useState(false);
-  const tucked = useHeaderTucked(menuOpen);
+  const { tucked, scrolled } = useHeaderTucked(menuOpen);
 
   return (
     <header
@@ -190,9 +193,30 @@ export function Header() {
         }}
       />
 
+      {/* Mobile only, and a real gradient rather than blur alone: over the dark
+          hero a backdrop-blur darkens nothing, so content passing under the top
+          edge still read as sharp. Anchored here rather than inside the bar so
+          it stays put when the bar tucks away. Only exists below 767px. */}
       <div
-        className={`relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16 [@media(max-width:767px)]:transition-transform [@media(max-width:767px)]:duration-300 [@media(max-width:767px)]:ease-out ${
-          tucked ? "[@media(max-width:767px)]:-translate-y-[150px]" : ""
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-0 hidden h-[130px] transition-opacity duration-200 [@media(max-width:767px)]:block ${
+          scrolled ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background:
+            "linear-gradient(to bottom, var(--background) 0%, var(--background) 42%, transparent 100%)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          maskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+        }}
+      />
+
+      <div
+        className={`relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16 [@media(max-width:767px)]:transition-transform [@media(max-width:767px)]:ease-out ${
+          tucked
+            ? "[@media(max-width:767px)]:-translate-y-[150px] [@media(max-width:767px)]:duration-0"
+            : "[@media(max-width:767px)]:duration-300"
         }`}
       >
         <a href="#" className="flex shrink-0 items-center gap-2.5">
