@@ -27,8 +27,8 @@ const ISRAEL_PATH =
   "M42,2 L58,12 L56,35 L66,55 L58,70 L56,82 L46,135 L39,172 L36,182 L32,170 L22,130 L16,95 L13,65 L16,42 L10,22 L24,6 Z";
 
 const CITIES = [
-  { x: 16, y: 40, label: "תל אביב" },
-  { x: 12, y: 20, label: "חיפה" },
+  { x: 21, y: 40, label: "תל אביב" },
+  { x: 18, y: 20, label: "חיפה" },
   { x: 33, y: 62, label: "ירושלים" },
   { x: 27, y: 118, label: "באר שבע" },
 ];
@@ -98,7 +98,7 @@ function GrowingIsrael({ progress }: { progress: MotionValue<number> }) {
               key={city.label}
               cx={city.x}
               cy={city.y}
-              r={3.2}
+              r={2.6}
               fill="var(--background)"
               className={`transition-opacity duration-500 ${
                 i < revealedCities ? "opacity-100" : "opacity-0"
