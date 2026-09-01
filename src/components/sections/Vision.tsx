@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValueEvent, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 
@@ -86,9 +86,16 @@ function NodeLabel({
 }
 
 function useRevealedCount(progress: MotionValue<number>, total: number) {
-  const [count, setCount] = useState(0);
+  const read = (v: number) => Math.min(total, Math.max(0, Math.floor(total * (v + 0.1))));
+  const [count, setCount] = useState(() => read(progress.get()));
+  // The progress source is swapped out once the mobile check resolves, and a
+  // value that is simply pinned never emits a change - so re-read it here.
+  useEffect(() => {
+    setCount(read(progress.get()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress, total]);
   useMotionValueEvent(progress, "change", (v) => {
-    const next = Math.min(total, Math.max(0, Math.floor(total * (v + 0.1))));
+    const next = read(v);
     setCount((prev) => (prev === next ? prev : next));
   });
   return count;
@@ -157,7 +164,7 @@ function VisionContent({ progress }: { progress: MotionValue<number> }) {
 export function Vision() {
   return (
     <section id="vision" data-header-theme="dark" className="scroll-mt-[90px]">
-      <ScrollStage heightVh={340}>
+      <ScrollStage staticOnMobile heightVh={340}>
         {(progress) => <VisionContent progress={progress} />}
       </ScrollStage>
     </section>

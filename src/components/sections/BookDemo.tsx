@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 import { BOOKING_URL } from "@/lib/constants";
@@ -26,9 +26,16 @@ const STEPS = [
 ];
 
 function useActiveCount(progress: MotionValue<number>, total: number) {
-  const [count, setCount] = useState(1);
+  const read = (v: number) => Math.min(total, Math.max(1, Math.ceil(v * total)));
+  const [count, setCount] = useState(() => read(progress.get()));
+  // The progress source is swapped out once the mobile check resolves, and a
+  // value that is simply pinned never emits a change - so re-read it here.
+  useEffect(() => {
+    setCount(read(progress.get()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress, total]);
   useMotionValueEvent(progress, "change", (v) => {
-    const next = Math.min(total, Math.max(1, Math.ceil(v * total)));
+    const next = read(v);
     setCount((prev) => (prev === next ? prev : next));
   });
   return count;
@@ -168,7 +175,7 @@ function BookDemoContent({ progress }: { progress: MotionValue<number> }) {
 export function BookDemo() {
   return (
     <section id="demo" data-header-theme="dark" className="scroll-mt-[90px]">
-      <ScrollStage heightVh={300}>
+      <ScrollStage staticOnMobile heightVh={300}>
         {(progress) => <BookDemoContent progress={progress} />}
       </ScrollStage>
     </section>

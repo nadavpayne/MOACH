@@ -2,6 +2,7 @@
 
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const ITEMS = [
   {
@@ -42,10 +43,12 @@ function ListItem({
     isLast ? ["#b6bec7", "#3d7fe0"] : ["#b6bec7", "#3d7fe0", "#3d7fe0", "#b6bec7"]
   );
 
+  const isMobile = useIsMobile();
+
   return (
     <motion.div
       className="relative border-b-4 py-6 [@media(max-height:820px)]:py-2 [@media(max-width:820px)]:py-0.5"
-      style={{ borderColor }}
+      style={{ borderColor: isMobile ? ACTIVE_BORDER : borderColor }}
     >
       <h3 className="text-lg font-bold text-slate-900 [@media(max-width:767px)]:text-foreground [@media(max-width:820px)]:text-base">
         {item.title}
@@ -57,7 +60,15 @@ function ListItem({
   );
 }
 
+// Mobile holds these instead of scrubbing: the peak scroll values overflow
+// the much shorter mobile panel, and the grey border means "not reached yet".
+const ACTIVE_BORDER = "#3d7fe0";
+const MOBILE_BRAIN_SCALE = 1.35;
+const MOBILE_GLOW_SCALE = 1.45;
+const MOBILE_GLOW_OPACITY = 0.35;
+
 function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
+  const isMobile = useIsMobile();
   const lastStepStart = (ITEMS.length - 1) / ITEMS.length;
   const scale = useTransform(progress, [0, lastStepStart, 1], [0.15, 1.35, 2.1]);
   const glowScale = useTransform(progress, [0, lastStepStart, 1], [0.3, 1.45, 2.3]);
@@ -67,12 +78,15 @@ function GrowingBrain({ progress }: { progress: MotionValue<number> }) {
     <div className="relative flex h-full w-full items-center justify-center">
       <motion.div
         aria-hidden
-        style={{ scale: glowScale, opacity: glowOpacity }}
+        style={{
+          scale: isMobile ? MOBILE_GLOW_SCALE : glowScale,
+          opacity: isMobile ? MOBILE_GLOW_OPACITY : glowOpacity,
+        }}
         className="absolute h-64 w-64 rounded-full bg-accent blur-[90px]"
       />
       <motion.div
         style={{
-          scale,
+          scale: isMobile ? MOBILE_BRAIN_SCALE : scale,
           backgroundColor: "var(--accent)",
           WebkitMaskImage: "url(/logo/moach-mark.png)",
           maskImage: "url(/logo/moach-mark.png)",
