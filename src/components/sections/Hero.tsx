@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useTransform,
@@ -11,19 +11,72 @@ import {
 import { ScrollStage } from "@/components/ui/ScrollStage";
 import { BOOKING_URL } from "@/lib/constants";
 
+// One frame's worth of slack (~30fps) - below this we treat the video as
+// already at the target time and skip issuing a redundant seek.
+const SEEK_EPSILON = 1 / 30;
+
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const seekState = useRef<{
+    seeking: boolean;
+    pendingTime: number | null;
+    safetyTimeout: ReturnType<typeof setTimeout> | undefined;
+  }>({ seeking: false, pendingTime: null, safetyTimeout: undefined });
   const smoothProgress = useSpring(progress, { stiffness: 400, damping: 30, mass: 0.5 });
 
   const contentOpacity = useTransform(smoothProgress, [0, 0.75, 1], [1, 1, 0]);
-  const contentY = useTransform(smoothProgress, [0, 1], [0, -60]);
   const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.12]);
   const imageBrightness = useTransform(smoothProgress, [0, 1], [0.45, 0.15]);
+
+  // Video seeks are async - if we set currentTime faster than the browser
+  // can finish decoding to the new spot, requests pile up and the video
+  // appears to freeze while it works through a backlog of stale targets.
+  // Only ever keep one seek in flight, and always jump straight to the
+  // latest requested time once it completes (never play through the queue).
+  const runSeek = (time: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    seekState.current.seeking = true;
+    video.currentTime = time;
+    clearTimeout(seekState.current.safetyTimeout);
+    seekState.current.safetyTimeout = setTimeout(() => {
+      seekState.current.seeking = false;
+    }, 300);
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleSeeked = () => {
+      clearTimeout(seekState.current.safetyTimeout);
+      seekState.current.seeking = false;
+      const next = seekState.current.pendingTime;
+      if (next !== null) {
+        seekState.current.pendingTime = null;
+        runSeek(next);
+      }
+    };
+
+    video.addEventListener("seeked", handleSeeked);
+    return () => {
+      video.removeEventListener("seeked", handleSeeked);
+      clearTimeout(seekState.current.safetyTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useMotionValueEvent(smoothProgress, "change", (v) => {
     const video = videoRef.current;
     if (!video || video.readyState < 1 || !Number.isFinite(video.duration)) return;
-    video.currentTime = v * video.duration;
+    const target = v * video.duration;
+    if (Math.abs(video.currentTime - target) < SEEK_EPSILON) return;
+
+    if (seekState.current.seeking) {
+      seekState.current.pendingTime = target;
+      return;
+    }
+    runSeek(target);
   });
 
   return (
@@ -64,7 +117,7 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
       />
 
       <motion.div
-        style={{ opacity: contentOpacity, y: contentY }}
+        style={{ opacity: contentOpacity }}
         className="relative z-10 mx-auto w-full max-w-6xl pt-24"
       >
         <h1 className="max-w-3xl text-5xl leading-[1.05] font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
