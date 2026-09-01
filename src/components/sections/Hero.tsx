@@ -122,12 +122,16 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         // Ride up into place rather than blinking into existence. Native
         // WAAPI without fill:forwards, so the transform is dropped by the
         // browser once it ends and can't linger over the sticky pinning.
+        // The easing is a gentle cubic rather than an expo: an expo curve
+        // spends most of its travel in the first quarter of the duration,
+        // which reads as a fast lurch followed by a crawl no matter how
+        // long the duration is.
         next.animate(
           [
             { transform: `translateY(${Math.round(window.innerHeight * 0.16)}px)` },
             { transform: "translateY(0px)" },
           ],
-          { duration: 620, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
+          { duration: 1150, easing: "cubic-bezier(0.33, 1, 0.68, 1)", fill: "backwards" }
         );
         animate(flashOpacity, 0, { duration: 0.55, ease: "easeOut" });
       },
