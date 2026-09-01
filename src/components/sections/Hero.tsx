@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import {
+  animate,
   motion,
   useTransform,
+  useMotionValue,
   useMotionValueEvent,
   useSpring,
   type MotionValue,
@@ -15,6 +17,13 @@ import { BOOKING_URL } from "@/lib/constants";
 // already at the target time and skip issuing a redundant seek.
 const SEEK_EPSILON = 1 / 30;
 
+// The video finishes, and the flash fires, at this point in the scroll -
+// the last sliver of the stage is just runway for the transition.
+const FLASH_AT = 0.94;
+// Scrolling back up past this re-arms the flash, so it can fire again on the
+// next pass down but never on the way up.
+const REARM_AT = 0.6;
+
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const seekState = useRef<{
@@ -22,11 +31,16 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
     pendingTime: number | null;
     safetyTimeout: ReturnType<typeof setTimeout> | undefined;
   }>({ seeking: false, pendingTime: null, safetyTimeout: undefined });
+  const armedRef = useRef(false);
+  const flashOpacity = useMotionValue(0);
   const smoothProgress = useSpring(progress, { stiffness: 400, damping: 30, mass: 0.5 });
 
-  const contentOpacity = useTransform(smoothProgress, [0, 0.75, 1], [1, 1, 0]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.75, FLASH_AT], [1, 1, 0]);
   const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.12]);
   const imageBrightness = useTransform(smoothProgress, [0, 1], [0.45, 0.15]);
+  // A faint glow builds just before the flash, so the burst reads as
+  // deliberate rather than as a rendering glitch.
+  const preGlow = useTransform(smoothProgress, [0.72, FLASH_AT], [0, 0.16]);
 
   // Video seeks are async - if we set currentTime faster than the browser
   // can finish decoding to the new spot, requests pile up and the video
@@ -69,7 +83,9 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
   useMotionValueEvent(smoothProgress, "change", (v) => {
     const video = videoRef.current;
     if (!video || video.readyState < 1 || !Number.isFinite(video.duration)) return;
-    const target = v * video.duration;
+    // Map the clip so its last frame lands exactly on the flash, not on the
+    // very end of the stage - otherwise the ending is never actually seen.
+    const target = Math.min(v / FLASH_AT, 1) * video.duration;
     if (Math.abs(video.currentTime - target) < SEEK_EPSILON) return;
 
     if (seekState.current.seeking) {
@@ -77,6 +93,35 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
       return;
     }
     runSeek(target);
+  });
+
+  // Flash out, cut to the next section while the screen is white, then fade
+  // the flash away - so the next section is simply *there* when sight
+  // returns, with no scrolling seen in between.
+  useMotionValueEvent(progress, "change", (v) => {
+    if (v < REARM_AT) {
+      armedRef.current = true;
+      return;
+    }
+    if (v < FLASH_AT || !armedRef.current) return;
+    // Only where the stage is actually pinned; on mobile it scrolls normally
+    // and a surprise jump would just feel broken.
+    if (!window.matchMedia("(min-width: 768px)").matches) return;
+    const next = document.getElementById("how-it-works");
+    if (!next) return;
+
+    armedRef.current = false;
+    animate(flashOpacity, 1, {
+      duration: 0.14,
+      ease: "easeIn",
+      onComplete: () => {
+        window.scrollTo({
+          top: next.getBoundingClientRect().top + window.scrollY,
+          behavior: "instant",
+        });
+        animate(flashOpacity, 0, { duration: 0.55, ease: "easeOut" });
+      },
+    });
   });
 
   return (
@@ -149,12 +194,28 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         <div className="h-0.5 w-24 bg-foreground-secondary/60" />
         <p className="text-sm text-foreground-secondary">נתונים חיים, כל משמרת</p>
       </motion.div>
+
+      <motion.div
+        aria-hidden
+        style={{ opacity: preGlow }}
+        className="pointer-events-none absolute inset-0 z-20 bg-white"
+      />
+      {/* Fixed, so it still covers the viewport after the scroll cut - by
+          then the hero itself is far above the fold. */}
+      <motion.div
+        aria-hidden
+        style={{ opacity: flashOpacity }}
+        className="pointer-events-none fixed inset-0 z-50 bg-white"
+      />
     </section>
   );
 }
 
 export function Hero() {
+  // Long on purpose: the clip has to unfold over enough scroll distance that
+  // each wheel notch nudges it a few frames instead of leaping half a second,
+  // which is what made it feel jumpy (and made every seek expensive).
   return (
-    <ScrollStage heightVh={180}>{(progress) => <HeroContent progress={progress} />}</ScrollStage>
+    <ScrollStage heightVh={520}>{(progress) => <HeroContent progress={progress} />}</ScrollStage>
   );
 }
