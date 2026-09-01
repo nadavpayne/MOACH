@@ -1,18 +1,26 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useTransform, useMotionValueEvent, type MotionValue } from "framer-motion";
+import {
+  motion,
+  useTransform,
+  useMotionValueEvent,
+  useSpring,
+  type MotionValue,
+} from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 import { BOOKING_URL } from "@/lib/constants";
 
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const contentOpacity = useTransform(progress, [0, 0.6, 1], [1, 1, 0]);
-  const contentY = useTransform(progress, [0, 1], [0, -60]);
-  const imageScale = useTransform(progress, [0, 1], [1, 1.12]);
-  const imageBrightness = useTransform(progress, [0, 1], [0.45, 0.15]);
+  const smoothProgress = useSpring(progress, { stiffness: 400, damping: 30, mass: 0.5 });
 
-  useMotionValueEvent(progress, "change", (v) => {
+  const contentOpacity = useTransform(smoothProgress, [0, 0.75, 1], [1, 1, 0]);
+  const contentY = useTransform(smoothProgress, [0, 1], [0, -60]);
+  const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.12]);
+  const imageBrightness = useTransform(smoothProgress, [0, 1], [0.45, 0.15]);
+
+  useMotionValueEvent(smoothProgress, "change", (v) => {
     const video = videoRef.current;
     if (!video || video.readyState < 1 || !Number.isFinite(video.duration)) return;
     video.currentTime = v * video.duration;
@@ -32,7 +40,7 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
           playsInline
           preload="auto"
           aria-hidden
-          className="h-full w-full object-cover object-center opacity-90 grayscale blur-sm contrast-110 md:blur-md"
+          className="h-full w-full object-cover object-center opacity-90 grayscale blur-[2px] contrast-110"
         />
       </motion.div>
       <motion.div
