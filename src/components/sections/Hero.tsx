@@ -119,6 +119,16 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
           top: next.getBoundingClientRect().top + window.scrollY,
           behavior: "instant",
         });
+        // Ride up into place rather than blinking into existence. Native
+        // WAAPI without fill:forwards, so the transform is dropped by the
+        // browser once it ends and can't linger over the sticky pinning.
+        next.animate(
+          [
+            { transform: `translateY(${Math.round(window.innerHeight * 0.16)}px)` },
+            { transform: "translateY(0px)" },
+          ],
+          { duration: 620, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
+        );
         animate(flashOpacity, 0, { duration: 0.55, ease: "easeOut" });
       },
     });
