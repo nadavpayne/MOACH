@@ -16,7 +16,14 @@ const NAV_LINKS = [
 function detectTheme(): "dark" | "light" {
   const el = document.elementFromPoint(window.innerWidth / 2, 80);
   const themed = el?.closest("[data-header-theme]");
-  return (themed?.getAttribute("data-header-theme") as "dark" | "light" | null) ?? "dark";
+  if (!themed) return "dark";
+  // Some sections are light on desktop but dark on mobile, and they carry a
+  // separate mobile value for it - a media query can restyle a section but
+  // cannot change the attribute this reads.
+  const mobile = window.matchMedia("(max-width: 767px)").matches
+    ? themed.getAttribute("data-header-theme-mobile")
+    : null;
+  return ((mobile ?? themed.getAttribute("data-header-theme")) as "dark" | "light" | null) ?? "dark";
 }
 
 function useHeaderTheme() {
@@ -142,11 +149,16 @@ function useHeaderTucked(menuOpen: boolean) {
 
   useMotionValueEvent(scrollY, "change", (y) => {
     const delta = y - lastY.current;
-    // Ignore sub-threshold jitter and momentum rubber-banding, which would
-    // otherwise flap the header on tiny direction reversals.
-    if (Math.abs(delta) < 6) return;
+    // Small enough to react to the first flick of a scroll, large enough to
+    // ignore momentum rubber-banding flapping it on tiny reversals.
+    if (Math.abs(delta) < 4) return;
     lastY.current = y;
-    setTucked(isPastFirstPage(y) && delta > 0);
+    // Resting at the very top there is nothing to get out of the way of.
+    if (y < 8) {
+      setTucked(false);
+      return;
+    }
+    setTucked(delta > 0);
   });
 
   // Never tuck away an open menu out from under the reader.
@@ -162,8 +174,8 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 h-[72px] [@media(max-width:767px)]:transition-transform [@media(max-width:767px)]:duration-300 [@media(max-width:767px)]:ease-out ${
-        tucked ? "[@media(max-width:767px)]:-translate-y-[150px]" : ""
+      className={`fixed inset-x-0 top-0 z-50 h-[72px] ${
+        tucked ? "[@media(max-width:767px)]:pointer-events-none" : ""
       }`}
     >
       <div
@@ -178,7 +190,11 @@ export function Header() {
         }}
       />
 
-      <div className="relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16">
+      <div
+        className={`relative mx-auto flex h-full max-w-6xl items-center gap-10 px-6 md:px-16 [@media(max-width:767px)]:transition-transform [@media(max-width:767px)]:duration-300 [@media(max-width:767px)]:ease-out ${
+          tucked ? "[@media(max-width:767px)]:-translate-y-[150px]" : ""
+        }`}
+      >
         <a href="#" className="flex shrink-0 items-center gap-2.5">
           <Image
             src="/logo/moach-mark.png"

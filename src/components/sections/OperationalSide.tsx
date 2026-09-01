@@ -43,13 +43,13 @@ function StepText({ step, active }: { step: (typeof STEPS)[number]; active: bool
         active ? "opacity-100 translate-y-0" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >
-      <span className="text-4xl font-extrabold text-slate-900/10 [@media(min-width:821px)]:text-7xl md:text-8xl">
+      <span className="text-4xl font-extrabold text-slate-900/10 [@media(max-width:767px)]:text-white/10 [@media(min-width:821px)]:text-7xl md:text-8xl">
         {step.number}
       </span>
-      <h3 className="mt-2 text-lg font-extrabold text-slate-900 [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-2xl md:text-3xl">
+      <h3 className="mt-2 text-lg font-extrabold text-slate-900 [@media(max-width:767px)]:text-foreground [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-2xl md:text-3xl">
         {step.title}
       </h3>
-      <p className="mt-1 max-w-md text-xs leading-relaxed text-slate-600 [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-base">
+      <p className="mt-1 max-w-md text-xs leading-relaxed text-slate-600 [@media(max-width:767px)]:text-foreground-secondary [@media(min-width:821px)]:mt-4 [@media(min-width:821px)]:text-base">
         {step.desc}
       </p>
     </div>
@@ -70,14 +70,14 @@ function DemandMockup() {
   const heights = [30, 45, 38, 62, 50, 90, 55];
   return (
     <div className="flex h-full flex-col justify-center p-8">
-      <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 uppercase">
+      <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 [@media(max-width:767px)]:text-foreground-secondary uppercase">
         תחזית שבועית
       </p>
       <div className="flex h-40 gap-3">
         {heights.map((h, i) => (
           <div key={i} className="flex flex-1 flex-col items-center justify-end gap-2">
             <div
-              className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-slate-300"}`}
+              className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-slate-300 [@media(max-width:767px)]:bg-white/20"}`}
               style={{ height: `${h}%` }}
             />
             {i === 5 && <span className="text-[10px] font-semibold text-accent">ערב חג</span>}
@@ -99,9 +99,9 @@ function OrdersMockup() {
       {rows.map((row) => (
         <div
           key={row.name}
-          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 [@media(max-width:767px)]:border-white/10 bg-slate-100/50 [@media(max-width:767px)]:bg-white/[0.04] px-4 py-3"
         >
-          <span className="text-sm font-medium text-slate-900">{row.name}</span>
+          <span className="text-sm font-medium text-slate-900 [@media(max-width:767px)]:text-foreground">{row.name}</span>
           <span className="text-xs text-accent">{row.status}</span>
         </div>
       ))}
@@ -121,9 +121,9 @@ function WorkforceMockup() {
       {shifts.map((shift) => (
         <div
           key={shift.name}
-          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 [@media(max-width:767px)]:border-white/10 bg-slate-100/50 [@media(max-width:767px)]:bg-white/[0.04] px-4 py-3"
         >
-          <span className="text-sm font-medium text-slate-900">{shift.name}</span>
+          <span className="text-sm font-medium text-slate-900 [@media(max-width:767px)]:text-foreground">{shift.name}</span>
           {shift.tag && (
             <span className="rounded bg-accent/15 px-2 py-1 text-xs font-semibold text-accent">
               {shift.tag}
@@ -146,10 +146,10 @@ function SupplyChainMockup() {
       {suppliers.map((s) => (
         <div
           key={s.name}
-          className="flex items-center justify-between border border-slate-200 bg-slate-100/50 px-4 py-3"
+          className="flex items-center justify-between border border-slate-200 [@media(max-width:767px)]:border-white/10 bg-slate-100/50 [@media(max-width:767px)]:bg-white/[0.04] px-4 py-3"
         >
-          <span className="text-sm font-medium text-slate-900">{s.name}</span>
-          <span className="text-xs text-slate-500">{s.days}</span>
+          <span className="text-sm font-medium text-slate-900 [@media(max-width:767px)]:text-foreground">{s.name}</span>
+          <span className="text-xs text-slate-500 [@media(max-width:767px)]:text-foreground-secondary">{s.days}</span>
         </div>
       ))}
     </div>
@@ -175,9 +175,9 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
   const active = useActiveStep(progress, STEPS.length);
 
   return (
-    <div className="relative flex h-full flex-col bg-white px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
+    <div className="relative flex h-full flex-col bg-white [@media(max-width:767px)]:bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <div className="relative flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 bg-slate-50/60 p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-5">
+        <div className="relative flex flex-1 flex-col justify-center gap-6 border-2 border-slate-300 [@media(max-width:767px)]:border-white/15 bg-slate-50/60 [@media(max-width:767px)]:bg-white/[0.03] p-8 md:p-12 [@media(max-height:820px)]:gap-3 [@media(max-height:820px)]:p-5 [@media(max-width:820px)]:gap-3 [@media(max-width:820px)]:p-5">
           <p className="text-xs font-semibold tracking-widest text-accent uppercase">
             הצד התפעולי
           </p>
@@ -189,7 +189,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
               ))}
             </div>
 
-            <div className="relative h-[150px] overflow-hidden border-2 border-slate-300 bg-white md:h-[260px]">
+            <div className="relative h-[150px] overflow-hidden border-2 border-slate-300 [@media(max-width:767px)]:border-white/15 bg-white [@media(max-width:767px)]:bg-background md:h-[260px]">
               {STEPS.map((_, i) => (
                 <StepMockup key={i} index={i} active={i === active} />
               ))}
@@ -209,7 +209,7 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
 
 export function OperationalSide() {
   return (
-    <section id="operations" data-header-theme="light" className="scroll-mt-[90px]">
+    <section id="operations" data-header-theme="light" data-header-theme-mobile="dark" className="scroll-mt-[90px]">
       <ScrollStage heightVh={340}>
         {(progress) => <OperationalSideContent progress={progress} />}
       </ScrollStage>
