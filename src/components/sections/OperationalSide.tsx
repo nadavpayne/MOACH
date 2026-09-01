@@ -70,18 +70,22 @@ function StepDot({ active }: { active: boolean }) {
 function DemandMockup() {
   const heights = [30, 45, 38, 62, 50, 90, 55];
   return (
-    <div className="flex h-full flex-col justify-center p-8">
-      <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 [@media(max-width:767px)]:text-foreground-secondary uppercase">
+    <div className="flex h-full flex-col justify-center p-8 [@media(max-width:767px)]:p-4">
+      <p className="mb-6 text-xs font-semibold tracking-widest text-slate-500 [@media(max-width:767px)]:text-foreground-secondary uppercase [@media(max-width:767px)]:mb-3">
         תחזית שבועית
       </p>
-      <div className="flex h-40 gap-3">
+      <div className="flex h-40 gap-3 [@media(max-width:767px)]:mt-4 [@media(max-width:767px)]:h-[76px] [@media(max-width:767px)]:gap-1.5">
         {heights.map((h, i) => (
-          <div key={i} className="flex flex-1 flex-col items-center justify-end gap-2">
+          <div key={i} className="relative flex flex-1 flex-col items-center justify-end gap-2">
             <div
               className={`w-full rounded-t ${i === 5 ? "bg-accent" : "bg-slate-300 [@media(max-width:767px)]:bg-white/20"}`}
               style={{ height: `${h}%` }}
             />
-            {i === 5 && <span className="text-[10px] font-semibold text-accent">ערב חג</span>}
+            {i === 5 && (
+              <span className="text-[10px] font-semibold text-accent [@media(max-width:767px)]:absolute [@media(max-width:767px)]:-top-4 [@media(max-width:767px)]:left-1/2 [@media(max-width:767px)]:-translate-x-1/2 [@media(max-width:767px)]:whitespace-nowrap">
+                ערב חג
+              </span>
+            )}
           </div>
         ))}
       </div>

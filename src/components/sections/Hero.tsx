@@ -180,6 +180,18 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
         className="pointer-events-none absolute -top-1/3 left-1/4 h-[600px] w-[600px] rounded-full bg-accent/10 blur-[120px]"
       />
 
+      {/* Mobile only: without this the hero image just stops dead against the
+          next section, reading as a hard seam. Fading it into the page
+          background lets one dissolve into the other. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[160px] [@media(max-width:767px)]:block"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 0%, var(--background) 85%, var(--background) 100%)",
+        }}
+      />
+
       <motion.div
         style={{ opacity: contentOpacity }}
         className="relative z-10 mx-auto w-full max-w-6xl pt-24"
