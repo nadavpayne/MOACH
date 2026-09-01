@@ -12,6 +12,7 @@ import {
 } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 import { BOOKING_URL } from "@/lib/constants";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // One frame's worth of slack (~30fps) - below this we treat the video as
 // already at the target time and skip issuing a redundant seek.
@@ -25,6 +26,7 @@ const FLASH_AT = 0.94;
 const REARM_AT = 0.6;
 
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
+  const isMobile = useIsMobile();
   const videoRef = useRef<HTMLVideoElement>(null);
   const seekState = useRef<{
     seeking: boolean;
@@ -82,6 +84,9 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
 
   useMotionValueEvent(smoothProgress, "change", (v) => {
     const video = videoRef.current;
+    // Mobile never seeks: 8s of footage across 644px of unpinned scroll reads
+    // as jumping, so it holds the opening frame as a still backdrop instead.
+    if (isMobile) return;
     if (!video || video.readyState < 1 || !Number.isFinite(video.duration)) return;
     // Map the clip so its last frame lands exactly on the flash, not on the
     // very end of the stage - otherwise the ending is never actually seen.

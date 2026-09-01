@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const STEPS = [
   {
@@ -171,8 +172,42 @@ function StepMockup({ index, active }: { index: number; active: boolean }) {
   );
 }
 
+function StepArrow({
+  label,
+  onClick,
+  flip,
+}: {
+  label: string;
+  onClick: () => void;
+  flip?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="hidden h-8 w-8 items-center justify-center rounded-full border border-white/20 text-foreground-secondary [@media(max-width:767px)]:flex"
+    >
+      {/* RTL: going back points right, going forward points left */}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d={flip ? "M9 5l7 7-7 7" : "M15 5l-7 7 7 7"}
+        />
+      </svg>
+    </button>
+  );
+}
+
 function OperationalSideContent({ progress }: { progress: MotionValue<number> }) {
-  const active = useActiveStep(progress, STEPS.length);
+  const isMobile = useIsMobile();
+  const scrolledStep = useActiveStep(progress, STEPS.length);
+  const [pickedStep, setPickedStep] = useState(0);
+  // Mobile has no pinning to drive a carousel off, so it is paged by hand.
+  const active = isMobile ? pickedStep : scrolledStep;
+  const step = (delta: number) =>
+    setPickedStep((i) => (i + delta + STEPS.length) % STEPS.length);
 
   return (
     <div className="relative flex h-full flex-col bg-white [@media(max-width:767px)]:bg-background px-6 pt-[100px] pb-10 md:px-16 [@media(max-height:820px)]:pt-[64px] [@media(max-height:820px)]:pb-4 [@media(max-width:820px)]:pt-[36px] [@media(max-width:820px)]:pb-4">
@@ -196,10 +231,14 @@ function OperationalSideContent({ progress }: { progress: MotionValue<number> })
             </div>
           </div>
 
-          <div className="flex justify-end gap-2">
-            {STEPS.map((step, i) => (
-              <StepDot key={step.number} active={i === active} />
-            ))}
+          <div className="flex items-center justify-end gap-3">
+            <StepArrow label="השלב הקודם" onClick={() => step(-1)} flip />
+            <div className="flex gap-2">
+              {STEPS.map((s, i) => (
+                <StepDot key={s.number} active={i === active} />
+              ))}
+            </div>
+            <StepArrow label="השלב הבא" onClick={() => step(1)} />
           </div>
         </div>
       </div>
