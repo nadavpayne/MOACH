@@ -51,11 +51,21 @@ function findPinnedStage(el: Element | null): HTMLElement | null {
 // away and the next arrives. Inside a pinned section the content underneath
 // is held still and only animates in place, so blurring there just veils
 // copy the reader is trying to read.
+//
+// Deliberately measures the stage's track rather than the pinned element
+// itself: mid-scroll the browser hasn't finished repositioning a sticky
+// element yet, so it reads a few pixels off zero and looks like it is
+// moving when it is not. The track is an ordinary element whose rect is an
+// exact function of scroll position, so it has no such lag. It spans the
+// full viewport from the top for exactly as long as its child is pinned.
 function isContentMoving(): boolean {
   const el = document.elementFromPoint(window.innerWidth / 2, 80);
   const stage = findPinnedStage(el);
-  if (!stage) return true;
-  return Math.abs(stage.getBoundingClientRect().top) > 1;
+  const track = stage?.parentElement;
+  if (!track) return true;
+  const rect = track.getBoundingClientRect();
+  const pinned = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+  return !pinned;
 }
 
 function useHeaderBlur() {
