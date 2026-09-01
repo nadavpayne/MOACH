@@ -1,15 +1,22 @@
 "use client";
 
-import Image from "next/image";
-import { motion, useTransform, type MotionValue } from "framer-motion";
+import { useRef } from "react";
+import { motion, useTransform, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { ScrollStage } from "@/components/ui/ScrollStage";
 import { BOOKING_URL } from "@/lib/constants";
 
 function HeroContent({ progress }: { progress: MotionValue<number> }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const contentOpacity = useTransform(progress, [0, 0.6, 1], [1, 1, 0]);
   const contentY = useTransform(progress, [0, 1], [0, -60]);
   const imageScale = useTransform(progress, [0, 1], [1, 1.12]);
   const imageBrightness = useTransform(progress, [0, 1], [0.45, 0.15]);
+
+  useMotionValueEvent(progress, "change", (v) => {
+    const video = videoRef.current;
+    if (!video || video.readyState < 1 || !Number.isFinite(video.duration)) return;
+    video.currentTime = v * video.duration;
+  });
 
   return (
     <section
@@ -17,13 +24,15 @@ function HeroContent({ progress }: { progress: MotionValue<number> }) {
       className="relative flex h-full flex-col justify-center overflow-hidden bg-background px-6 pb-16 md:px-16"
     >
       <motion.div style={{ scale: imageScale }} className="absolute inset-0">
-        <Image
-          src="/images/hero-kitchen.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[70%_35%] opacity-90 grayscale blur-sm contrast-110 md:blur-md"
+        <video
+          ref={videoRef}
+          src="/images/hero-drone-flythrough.mp4"
+          poster="/images/hero-drone-start.jpg"
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+          className="h-full w-full object-cover object-center opacity-90 grayscale blur-sm contrast-110 md:blur-md"
         />
       </motion.div>
       <motion.div
