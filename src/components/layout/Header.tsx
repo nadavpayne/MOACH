@@ -35,16 +35,30 @@ function useHeaderTheme() {
   return theme;
 }
 
-// Look for a pinned stage by its actual computed position rather than by
-// class name - matching on ".sticky" silently broke the moment the class
-// became "md:sticky", which left the blur stuck on during every scroll.
-function findPinnedStage(el: Element | null): HTMLElement | null {
-  let node = el as HTMLElement | null;
-  while (node && node !== document.body) {
-    if (getComputedStyle(node).position === "sticky") return node;
-    node = node.parentElement;
-  }
+// Each stage is a tall track with a sticky child that pins while the track
+// scrolls past. The hero is the track itself; the rest wrap theirs in a
+// <section>. Identified by computed position rather than class name, since
+// matching on ".sticky" already broke once when it became "md:sticky".
+function trackOf(el: Element): HTMLElement | null {
+  const first = el.firstElementChild as HTMLElement | null;
+  if (first && getComputedStyle(first).position === "sticky") return el as HTMLElement;
+  const second = first?.firstElementChild as HTMLElement | null;
+  if (second && getComputedStyle(second).position === "sticky") return first;
   return null;
+}
+
+// Layout position, which - unlike getBoundingClientRect - is not shifted by
+// CSS transforms. That matters because the section arriving after the hero's
+// flash is transform-animated into place, and a visual measurement reads that
+// as the section moving when it is only sliding into position.
+function layoutTop(el: HTMLElement): number {
+  let y = 0;
+  let node: HTMLElement | null = el;
+  while (node) {
+    y += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  return y;
 }
 
 // The blur is only meant to keep the header legible while one section slides
@@ -52,20 +66,28 @@ function findPinnedStage(el: Element | null): HTMLElement | null {
 // is held still and only animates in place, so blurring there just veils
 // copy the reader is trying to read.
 //
-// Deliberately measures the stage's track rather than the pinned element
-// itself: mid-scroll the browser hasn't finished repositioning a sticky
-// element yet, so it reads a few pixels off zero and looks like it is
-// moving when it is not. The track is an ordinary element whose rect is an
-// exact function of scroll position, so it has no such lag. It spans the
-// full viewport from the top for exactly as long as its child is pinned.
+// Compares scroll position against the stage's track in layout space. Both
+// the sticky element's mid-scroll repositioning lag and the arrival
+// animation's transform move things visually without moving them in layout,
+// so measuring layout is immune to both.
+// Asks which track the scroll position currently sits inside, rather than
+// asking what happens to be painted under a probe point. Point-probing was
+// the bug: while the section after the hero's flash animates into place it
+// is shifted down, so the probe landed on the empty track behind it, found
+// no pinned stage, and concluded the page was moving.
 function isContentMoving(): boolean {
-  const el = document.elementFromPoint(window.innerWidth / 2, 80);
-  const stage = findPinnedStage(el);
-  const track = stage?.parentElement;
-  if (!track) return true;
-  const rect = track.getBoundingClientRect();
-  const pinned = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
-  return !pinned;
+  const main = document.querySelector("main");
+  if (!main) return true;
+  const y = window.scrollY;
+  const vh = window.innerHeight;
+
+  for (const child of Array.from(main.children)) {
+    const track = trackOf(child);
+    if (!track) continue;
+    const top = layoutTop(track);
+    if (y >= top && y <= top + track.offsetHeight - vh) return false;
+  }
+  return true;
 }
 
 function useHeaderBlur() {
@@ -103,7 +125,7 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 h-[72px]">
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg transition-opacity duration-300 ${
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] backdrop-blur-lg transition-opacity duration-150 ${
           showBlur ? "opacity-100" : "opacity-0"
         }`}
         style={{
