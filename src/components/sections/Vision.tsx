@@ -151,7 +151,7 @@ function VisionContent({ progress }: { progress: MotionValue<number> }) {
                 הרשת צברה, מהיום הראשון.
               </p>
             </div>
-            <div className="relative h-[160px] overflow-hidden md:h-[320px] md:flex-1 [@media(max-height:820px)]:h-[200px] [@media(max-width:820px)]:h-[130px]">
+            <div className="relative h-[160px] overflow-hidden md:h-[320px] md:flex-1 [@media(max-height:820px)]:h-[200px] [@media(min-width:768px)_and_(max-width:820px)]:h-[130px] [@media(max-width:767px)]:h-[250px]">
               <NetworkVisual progress={progress} />
             </div>
           </div>
