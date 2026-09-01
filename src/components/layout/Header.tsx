@@ -35,12 +35,27 @@ function useHeaderTheme() {
   return theme;
 }
 
+// Look for a pinned stage by its actual computed position rather than by
+// class name - matching on ".sticky" silently broke the moment the class
+// became "md:sticky", which left the blur stuck on during every scroll.
+function findPinnedStage(el: Element | null): HTMLElement | null {
+  let node = el as HTMLElement | null;
+  while (node && node !== document.body) {
+    if (getComputedStyle(node).position === "sticky") return node;
+    node = node.parentElement;
+  }
+  return null;
+}
+
+// The blur is only meant to keep the header legible while one section slides
+// away and the next arrives. Inside a pinned section the content underneath
+// is held still and only animates in place, so blurring there just veils
+// copy the reader is trying to read.
 function isContentMoving(): boolean {
   const el = document.elementFromPoint(window.innerWidth / 2, 80);
-  const sticky = el?.closest(".sticky") as HTMLElement | null;
-  if (!sticky) return true;
-  const top = sticky.getBoundingClientRect().top;
-  return Math.abs(top) > 1;
+  const stage = findPinnedStage(el);
+  if (!stage) return true;
+  return Math.abs(stage.getBoundingClientRect().top) > 1;
 }
 
 function useHeaderBlur() {
