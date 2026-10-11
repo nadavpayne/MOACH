@@ -3,11 +3,12 @@ import { Section } from "@/components/ui/Section";
 import { HOW } from "@/lib/content";
 
 // 4.3 — שלושה צעדים. מספור כאן מוצדק: זה רצף אמיתי (מחברים → מסדרים → שואלים).
-// הוויזואל של "האיים מתחברים למוח" נכנס בשלב ג. בינתיים המוח במרכז, בגדול.
+// המוח "פועם" כמו לב — פעימה כפולה, והזוהר מאחוריו נדלק איתה. שתי עמודות רק
+// מ-lg: בין md ל-lg המוח הגדול היה דוחק את הטקסט לעמודה צרה מדי.
 export function HowItWorks() {
   return (
     <Section id="how-it-works" eyebrow={HOW.eyebrow} title={HOW.title} className="bg-band">
-      <div className="grid items-center gap-14 md:grid-cols-[1fr_auto] md:gap-20">
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
         <ol className="flex flex-col gap-8">
           {HOW.steps.map((step, i) => (
             <li key={step.title} className="flex gap-5">
@@ -26,9 +27,9 @@ export function HowItWorks() {
         </ol>
 
         <div className="flex justify-center">
-          <div className="relative flex h-72 w-72 items-center justify-center md:h-[24rem] md:w-[24rem]">
-            <div aria-hidden className="absolute inset-0 rounded-full bg-accent/20 blur-3xl" />
-            <BrainMark className="relative h-48 w-48 md:h-64 md:w-64" />
+          <div className="relative flex h-80 w-80 items-center justify-center lg:h-[28rem] lg:w-[28rem]">
+            <div aria-hidden className="absolute inset-0 animate-heartbeat-glow rounded-full bg-accent/25 blur-3xl" />
+            <BrainMark className="relative h-56 w-56 animate-heartbeat lg:h-80 lg:w-80" />
           </div>
         </div>
       </div>

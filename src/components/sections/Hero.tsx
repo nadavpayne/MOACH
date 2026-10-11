@@ -37,7 +37,7 @@ export function Hero() {
         <HeroChat />
       </div>
 
-      <p className="relative mx-auto mt-16 w-full max-w-6xl text-sm text-foreground-muted">
+      <p className="relative mx-auto mt-12 w-full max-w-6xl text-sm text-foreground-muted">
         {HERO.tagline}
       </p>
 

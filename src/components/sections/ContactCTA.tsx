@@ -30,7 +30,7 @@ export function ContactCTA() {
   const invalid = (f: keyof typeof err) => (err[f] ? { "aria-invalid": true, "aria-describedby": `${f}-error` } : {});
 
   return (
-    <section id="contact" className="px-6 py-24 md:px-16 md:py-32">
+    <section id="contact" className="px-6 py-12 md:px-16 md:py-16">
       <div className="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-2 md:gap-16">
         <div>
           <h2 className="text-3xl leading-tight font-extrabold text-balance text-foreground md:text-5xl">

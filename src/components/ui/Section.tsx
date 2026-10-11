@@ -18,7 +18,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`px-6 py-24 md:px-16 md:py-32 ${className}`}>
+    <section id={id} className={`px-6 py-12 md:px-16 md:py-16 ${className}`}>
       <div className="mx-auto w-full max-w-6xl">
         <header className="max-w-3xl">
           {eyebrow && (
@@ -33,7 +33,7 @@ export function Section({
             </p>
           )}
         </header>
-        {children && <div className="mt-14 md:mt-16">{children}</div>}
+        {children && <div className="mt-10 md:mt-12">{children}</div>}
       </div>
     </section>
   );

@@ -180,7 +180,7 @@ function Racks() {
 
 export function WarehouseScene() {
   return (
-    <div aria-hidden className="pointer-events-none relative -mx-6 mt-8 h-[220px] overflow-hidden md:-mx-16 md:h-[300px]">
+    <div aria-hidden className="pointer-events-none relative -mx-6 mt-4 h-[190px] overflow-hidden md:-mx-16 md:h-[250px]">
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2" style={{ width: W, height: H }}>
         <svg width={W} height={H} className="absolute inset-0 block">
           <Racks />
