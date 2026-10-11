@@ -125,7 +125,7 @@ export function Header() {
 
           <a
             href={CONTACT_ANCHOR}
-            className="hidden justify-self-end bg-accent-strong px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-secondary md:inline-flex"
+            className="hidden justify-self-end rounded-full border border-accent bg-accent-soft px-5 py-2 text-sm font-semibold text-accent-light transition-colors hover:bg-accent/25 hover:text-foreground md:inline-flex"
           >
             {CTA_LABEL}
           </a>
