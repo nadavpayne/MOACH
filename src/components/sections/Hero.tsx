@@ -1,6 +1,7 @@
 import { CONTACT_ANCHOR } from "@/lib/constants";
 import { CTA_LABEL, HERO } from "@/lib/content";
 import { HeroChat } from "./HeroChat";
+import { WarehouseScene } from "./WarehouseScene";
 
 // 4.1 — הסקשן עצמו נשאר Server Component; רק הצ'אט המונפש הוא client.
 export function Hero() {
@@ -9,6 +10,8 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden px-6 pt-[120px] pb-20 md:px-16 md:pt-[160px] md:pb-28"
     >
+      <WarehouseScene />
+
       {/* זוהר כחול עדין מאחורי ההדגמה — הדבר היחיד שמושך את העין חוץ מהטקסט */}
       <div
         aria-hidden

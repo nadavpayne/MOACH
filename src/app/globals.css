@@ -54,6 +54,20 @@
   );
 }
 
+/* המחסן ברקע ה-Hero: רצועת קופסאות זזה אורך תבנית אחד (2400px), ופני
+   המסוע זזים מחזור פסים אחד (24px). שני המספרים מוגדרים גם ב-WarehouseScene. */
+@keyframes wh-slide {
+  to {
+    transform: translateX(-2400px);
+  }
+}
+
+@keyframes wh-dash {
+  to {
+    transform: translateX(-24px);
+  }
+}
+
 /* הדגמת הצ'אט ב-Hero: בועה נכנסת, ושלוש נקודות של "מקליד…". */
 @keyframes bubble-in {
   from {
