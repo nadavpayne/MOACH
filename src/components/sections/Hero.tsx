@@ -8,10 +8,8 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden px-6 pt-[120px] pb-20 md:px-16 md:pt-[160px] md:pb-28"
+      className="relative overflow-hidden px-6 pt-[120px] md:px-16 md:pt-[160px]"
     >
-      <WarehouseScene />
-
       {/* זוהר כחול עדין מאחורי ההדגמה — הדבר היחיד שמושך את העין חוץ מהטקסט */}
       <div
         aria-hidden
@@ -42,6 +40,9 @@ export function Hero() {
       <p className="relative mx-auto mt-16 w-full max-w-6xl text-sm text-foreground-muted">
         {HERO.tagline}
       </p>
+
+      {/* המחסן יושב מתחת לתוכן ולא מאחוריו, כדי לא להתחרות בצ'אט */}
+      <WarehouseScene />
     </section>
   );
 }
