@@ -1,5 +1,5 @@
 // "מקור: ERP · תיבת מייל" — הרכיב שחוזר הכי הרבה באתר, כי הוא הטענה המרכזית:
-// כל תשובה ניתנת לבדיקה. מופיע ב-Hero, בהדגמת יום המסירה ובכל מקום שמראה תשובה.
+// כל תשובה ניתנת לבדיקה. מופיע בכל מקום שמראה תשובה.
 export function SourceTag({ sources, className = "" }: { sources: readonly string[]; className?: string }) {
   return (
     <p

@@ -2,7 +2,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { DataOwnership } from "@/components/sections/DataOwnership";
-import { HandoverDay } from "@/components/sections/HandoverDay";
 import { Hero } from "@/components/sections/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Problem } from "@/components/sections/Problem";
@@ -20,7 +19,6 @@ export default function Home() {
         <Hero />
         <Problem />
         <HowItWorks />
-        <HandoverDay />
         <Sources />
         <Process />
         <DataOwnership />
